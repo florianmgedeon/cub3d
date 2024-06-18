@@ -34,7 +34,7 @@ $(NAME): _compiling $(OBJS) $(BOBJS)
 
 bonus: _compiling $(OBJS) $(BOBJS)
 	$(AR) $(NAME) $(OBJS) $(BOBJS)
-	printf "\r$(GREEN)🚀 ./$(NAME)            created                                                                                                                   \n$(END)"
+	printf "\r$(GREEN)🚀 ./$(NAME)        created                                                                                                                   \n$(END)"
 
 object/%.o: source/%.c 
 	mkdir -p $(dir $@)
@@ -50,6 +50,6 @@ fclean: clean
 re: fclean all
 
 _compiling:
-	@printf "$(ORANGE)🔁 ./$(NAME) \t\tcompiling$(END)"
+	@printf "$(ORANGE)🔁 ./$(NAME)        compiling$(END)"
 
 .PHONY: all bonus clean fclean re

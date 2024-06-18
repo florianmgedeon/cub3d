@@ -6,7 +6,7 @@
 #    By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 14:15:09 by jkoupy            #+#    #+#              #
-#    Updated: 2024/03/19 15:34:18 by jkoupy           ###   ########.fr        #
+#    Updated: 2024/06/18 15:34:46 by jkoupy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,11 @@ all: $(NAME)
 
 $(NAME): _compiling $(OBJS)
 	$(AR) $@ $(OBJS)
-	@printf "\r$(GREEN)🚀 ./$(NAME)      created                         \n$(END)"
+	@printf "\r$(GREEN)🚀 ./$(NAME)  created                     \n$(END)"
 
 object/%.o: source/%.c
 	@mkdir -p $(dir $@)
 	@printf "$(ORANGE). $(END)";
-	@sleep 0.1
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
@@ -46,6 +45,6 @@ fclean: clean
 re: fclean all
 
 _compiling:
-	@printf "$(ORANGE)🔁 ./$(NAME) \tcompiling$(END)"
+	@printf "$(ORANGE)🔁 ./$(NAME)  compiling$(END)"
 
 .PHONY: all clean fclean re

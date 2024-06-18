@@ -6,7 +6,7 @@
 #    By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/18 14:59:11 by jkoupy            #+#    #+#              #
-#    Updated: 2024/06/18 15:08:06 by jkoupy           ###   ########.fr        #
+#    Updated: 2024/06/18 15:33:53 by jkoupy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ clean:
 	@$(RM) $(OBJ_DIR)
 	@make clean -sC library/libft
 	@make clean -sC library/get_next_line
-	@printf "$(RED)💥 object files\t\tremoved\n$(END)"
+	@printf "$(RED)💥 object files     removed\n$(END)"
 
 fclean: clean
 	@make fclean -sC library/libft
@@ -70,12 +70,12 @@ fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) test
 	@$(RM) heredocs
-	@printf "$(RED)💥 ./$(NAME) \t\tremoved\n$(END)"
+	@printf "$(RED)💥 ./$(NAME)          removed\n$(END)"
 
 re: _rebuild fclean all
 
 _rebuild:
-	@printf "$(ORANGE)🚧 ./$(NAME)\t\trebuild\n$(END)"
+	@printf "$(ORANGE)🚧 ./$(NAME)          rebuild\n$(END)"
 
 nothing:
 	@printf "💩$(BROWN) made $(RED)n$(ORANGE)o$(YELLOW)t$(GREEN)h$(BLUE)i$(INDIGO)n$(VIOLET)g\n$(END)"
