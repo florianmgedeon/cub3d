@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:41:33 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/04/16 02:28:21 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:00:28 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	save_line(t_list **llist, int fd)
 	return (save_line(llist, fd));
 }
 
-char	*get_next_line(int fd)
+int	get_next_line(int fd, char **line)
 {
 	static t_list	*llist;
 	char			*next_line;
@@ -114,55 +114,13 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		free_list(&llist, NULL);
-		return (NULL);
+		return (-1);
 	}
 	save_line(&llist, fd);
 	next_line = read_gnl_line(llist);
 	free_line(&llist);
-	return (next_line);
+	*line = next_line;
+	if (next_line)
+		return (1);
+	return (0);
 }
-
-// 	printf("\tlist before:\n");
-// 	print_list(llist);
-// 	printf("\tlist mid:\n");
-// 	print_list(llist);
-// 	printf("\tlist after:\n");
-// 	print_list(llist);
-
-// 	#include <fcntl.h>
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	int		i;
-// 	int		j;
-// 	char	*files[] = {"test.txt"};
-// //lorem_ipsum.txt, "empty.txt", "one_nl.txt",
-// "multiple_nl.txt", "one_char_lines.txt", "no_nl.txt"
-// 	i = 0;
-// 	while (i < 1)
-// 	{
-// 		printf("------------------------------\n");
-// 		printf("file: %s\n", files[i]);
-// 		printf("------------------------------\n");
-// 		fd = open(files[i], O_RDONLY);
-// 		line = get_next_line(fd);
-// 		j = 1;
-// 		while (line)
-// 		{
-// 			printf("Line %d: ", j);
-// 			//print_nl(line);
-// 			printf("\n");
-// 			free(line);
-// 			line = get_next_line(fd);
-// 			j++;
-// 		}
-// 		printf("Line %d: ", j);
-// 		//print_nl(line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	return (0);
-// }
