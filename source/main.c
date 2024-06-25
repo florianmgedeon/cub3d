@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:36:10 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/19 11:00:21 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:17:31 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,14 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc != 2)
-	{
-		write(2, "Error\nWrong number of arguments\n", 32);
-		return (0);
-	}
-	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4) != 0)
-	{
-		write(2, "Error\nWrong file extension\n", 28);
-		return (0);
-	}
+	if (!arg_check(argc, argv))
+		return (1);
+	init_data(&data);
 	if (!parse_map(&data, argv[1]))
-		return (0);
+		return (free_map(&data.map), 1);
+	if (!map_check(&data.map))
+		return (free_map(&data.map), 1);
 	//mlx
 	//run
-	return (0);
+	return (free_map(&data.map), 0);
 }

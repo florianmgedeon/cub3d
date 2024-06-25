@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/19 11:03:56 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:30:41 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ typedef struct s_color
 	int	b;	
 }	t_color;
 
+typedef struct s_player
+{
+	double	x;
+	double	y;
+	double	direction;
+}	t_player;
+
 typedef struct s_map
 {
 	char		*no_path;
@@ -56,13 +63,6 @@ typedef struct s_map
 	t_player	player;
 }	t_map;
 
-typedef struct s_player
-{
-	double	x;
-	double	y;
-	double	direction;
-}	t_player;
-
 typedef struct s_data
 {
 	void			*img;
@@ -75,6 +75,12 @@ typedef struct s_data
 	t_map			map;
 }	t_data;
 
+//init.c
+void	init_data(t_data *data);
+void	init_player(t_player *player);
+void	init_colors(t_map *map);
+int		free_map(t_map *map);
+
 //main.c
 int		main(int argc, char **argv);
 
@@ -84,10 +90,13 @@ bool	manage_line(t_map *map, char *line);
 bool	parse_texture(char **path, char *line);
 bool	parse_color(t_color *color, char *line);
 bool	parse_map_data(t_map *map, char *line);
+int		**ft_realloc(int **old_map, int old_size, int new_size);
 
 //parse_utils.c
 void	skip_spaces(char *line, int *i);
 int		is_player(char c);
-void	set_player(t_map *map, int x, int y, char c);
+void	set_player(t_player *player, int x, int y, char c);
+bool	arg_check(int argc, char **argv);
+bool	map_check(t_map *map);
 
 #endif

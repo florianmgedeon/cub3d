@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:55:26 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/19 11:07:02 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:31:52 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ bool	parse_map(t_data *data, char *path)
 		if (ret == -1 || !manage_line(&data->map, line))
 		{
 			write(2, "Error\nParsing error\n", 21);
+			close(fd);
 			return (0);
 		}
 		free(line);
@@ -60,8 +61,8 @@ bool	manage_line(t_map *map, char *line)
 		return (parse_color(&map->ceiling, line));
 	if (line[i] == '1')
 		return (parse_map_data(map, line));
-	if (line[i] == '\0')
-		return (0);
+	if (line[i] == '\0' || line[i] == '\n')
+		return (1);
 	return (0);
 }
 
@@ -89,10 +90,9 @@ bool	parse_texture(char **path, char *line)
 	return (1);
 }
 
-int	parse_color(t_color *color, char *line)
+bool	parse_color(t_color *color, char *line)
 {
 	int		i;
-	int		j;
 	t_color	new_color;
 
 	i = 0;
@@ -106,7 +106,7 @@ int	parse_color(t_color *color, char *line)
 		i++;
 	new_color.b = ft_atoi(line + i);
 	*color = new_color;
-	return (1);
+	return (true);
 }
 
 bool	parse_map_data(t_map *map, char *line)
@@ -133,9 +133,38 @@ bool	parse_map_data(t_map *map, char *line)
 			new_line[j++] = 2;
 			set_player(&map->player, j, i, line[i]);
 		}
-		return (0);
+		else if (line[i] == '\0' || line[i] == '\n')
+		{
+			map->size_y++;
+			if (map->size_x < j)
+				map->size_x = j;
+			break ;
+		}
+		else
+			return (0);
 		i++;
 	}
-	map->data = new_line;
+	map->data = ft_realloc(map->data, map->size_y - 1, map->size_y);
+	map->data[map->size_y - 1] = new_line;
 	return (1);
+}
+
+// realloc the map and copy the old map into the new one
+int **ft_realloc(int **old_map, int old_size, int new_size)
+{
+	int	**new_map;
+	int	i;
+
+	new_map = malloc(new_size * sizeof(int *));
+	if (!new_map)
+		return (0);
+	i = 0;
+	while (i < old_size)
+	{
+		new_map[i] = old_map[i];
+		free(old_map[i]);
+		i++;
+	}
+	free(old_map);
+	return (new_map);
 }
