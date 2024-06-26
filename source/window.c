@@ -12,11 +12,29 @@
 
 #include "../include/cub3d.h"
 
+//changes window when keys are pressed
+int	key_hook(int keycode, t_data *data)
+{
+	if (keycode == 100)//right
+		data->test_pos_x += 10;
+	if (keycode == 115)//down
+		data->test_pos_y += 10;
+	if (keycode == 97)//left
+		data->test_pos_x -= 10;
+	if (keycode == 119)//up
+		data->test_pos_y -= 10;
+	render(data);
+	return (0);
+}
+
 //cleans up if window is closed
 int	x_the_win(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
 	//destroy images with mlx_destroy_image
+	mlx_destroy_image(data->mlx, data->test_player);
+	//more destroy here
+
 	mlx_destroy_display(data->mlx);
 	//free map memory here
 	free(data->mlx);
@@ -26,7 +44,8 @@ int	x_the_win(t_data *data)
 //puts images of the map to the window
 void	render(t_data *data)
 {
-	mlx_put_image_to_window(data->mlx, data->win, data->test_player, 600, 300);
+	mlx_clear_window(data->mlx, data->win);//for testing
+	mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->test_pos_x, data->test_pos_y);
 }
 
 //creates the window & loads files to images

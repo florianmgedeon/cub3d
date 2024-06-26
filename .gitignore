@@ -1,1 +1,8 @@
 backlog.txt
+cub3d
+/object
+/heredocs
+/library/get_next_line/object
+/library/get_next_line/getnextline.a
+/library/libft/object
+/library/libft/libft.a
