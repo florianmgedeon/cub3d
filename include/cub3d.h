@@ -80,6 +80,7 @@ typedef struct s_data
 	void			*test_wall;//just for testing
 	int				test_height;//just for testing
 	int				test_width;//just for testing
+	int				*test_content;//just for testing
 	t_player		player;
 }	t_data;
 

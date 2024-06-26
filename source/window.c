@@ -63,7 +63,6 @@ int	key_hook(int keycode, t_data *data)
 int	x_the_win(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
-	//destroy images with mlx_destroy_image
 	mlx_destroy_image(data->mlx, data->test_player);
 	//more destroy here
 
@@ -77,35 +76,39 @@ int	x_the_win(t_data *data)
 void	put_map(t_data *data)
 {
 	int i = 0;
-	while (i <= 1150) {
-		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, i, 0);
-		i += 50; }
-	i = 0;
-	while (i <= 1150) {
-		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, i, 550);
-		i += 50; }
-	i = 0;
-	while (i <= 550) {
-		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 0, i);
-		i += 50; }
-	i = 0;
-	while (i <= 550) {
-		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 1150, i);
-		i += 50; }
-	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 50);
-	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 100);
-	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 150);
-	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 200);
-	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 250);
-	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 800, 400);
+	int x = 0;
+	int y = 0;
+
+	while (y < 8)
+	{
+		while (x < 8)
+		{
+			if (data->test_content[i] == 1)
+				mlx_put_image_to_window(data->mlx, data->win, data->test_wall, x * 50, y * 50);
+			x++;
+			i++;
+		}
+		x = 0;
+		y++;
+	}
 }
 
-void put_ray(t_data *data)
+void put_ray(t_data *data, int color, float end_x, float end_y)
 {
 	int x = data->player.x + 15;
 	int y = data->player.y + 15;
-	int x1 = data->player.ray_end_x;
-	int y1 = data->player.ray_end_y;
+	int x1 = 0;
+	int y1 = 0;
+	if (end_x == 0 || end_y == 0)
+	{
+		x1 = data->player.ray_end_x;
+		y1 = data->player.ray_end_y;
+	}
+	else
+	{
+		x1 = end_x;
+		y1 = end_y;
+	}
 
 	int dx = abs(x1 - x);
 	int dy = abs(y1 - y);
@@ -120,7 +123,7 @@ void put_ray(t_data *data)
 
 	for(int i = 0; i < n; i++)
 	{
-		mlx_pixel_put(data->mlx, data->win, x, y, 0x00FFFFFF);
+		mlx_pixel_put(data->mlx, data->win, x, y, color);
 		error2 = 2 * error;
 
 		if(error2 > -dy)
@@ -138,13 +141,66 @@ void put_ray(t_data *data)
 
 }
 
+void put_more_rays(t_data *data)
+{
+    int i = 0;
+    float end_x = 0;
+    float end_y = 0;
+    float mytan = 0;
+    float xoffset = 0;
+    float yoffset = 0;
+    int dof = 0;
+    int map_index = 0;
+
+	//VERTICAL
+    while (i < 1)
+    {
+        mytan = tan(PI - data->player.angle - 0.0000001);
+        if(cos(data->player.angle) >= 0.0001) //looking left
+        {
+            end_x = (((int)(data->player.x / 50) * 50) + 50);
+            end_y = (data->player.x - end_x) * mytan + data->player.y;
+            xoffset = 50;
+            yoffset = -xoffset * mytan;
+        }
+        else if(cos(data->player.angle) <= -0.0001) //looking right
+        {
+            end_x = (((int)(data->player.x / 50) * 50) - 0.0000001);
+            end_y = (data->player.x - end_x) * mytan + data->player.y;
+            xoffset = -50;
+            yoffset = -xoffset * mytan;
+        }
+        else //looking up or down
+        {
+            end_x = data->player.x;
+            end_y = data->player.y;
+            dof = 8;
+        }
+        while (dof < 8)
+        {
+            map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
+            if (map_index < 64 && data->test_content[map_index] == 1)
+                dof = 8;
+            else
+            {
+                end_x += xoffset;
+                end_y += yoffset;
+                dof++;
+            }
+        }
+        put_ray(data, 16711680, end_x, end_y);
+        i++;
+    }
+}
+
 //puts images of the map to the window
 void	render(t_data *data)
 {
 	mlx_clear_window(data->mlx, data->win);//just for testing
 	mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->player.x, data->player.y);
 	put_map(data);//just for testing
-	put_ray(data);//just for testing
+	put_more_rays(data);//just for testing
+	//put_ray(data, 16777215, 0, 0);//just for testing MAIN RAY
 }
 
 //creates the window & loads files to images

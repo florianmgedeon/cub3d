@@ -24,11 +24,21 @@ int main()
     //just for testing
     data.map.size_x = 1200;
     data.map.size_y = 600;
-    data.player.x = 600;
-    data.player.y = 300;
+    data.player.x = 200;
+    data.player.y = 200;
     data.player.angle = 0;
     data.player.ray_end_x = data.player.x + 15 + ray_length * cos(data.player.angle);
     data.player.ray_end_y = data.player.y + 15 + ray_length * sin(data.player.angle);
+    int test_content[] = {
+    1,1,1,1,1,1,1,1,
+	1,0,1,0,0,0,0,1,
+	1,0,1,0,0,0,0,1,
+	1,0,1,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,
+	1,0,0,0,0,1,0,1,
+	1,0,0,0,0,0,0,1,
+	1,1,1,1,1,1,1,1,};
+    data.test_content = test_content;
 
     //belongs here:
     if (!start_win(&data))
