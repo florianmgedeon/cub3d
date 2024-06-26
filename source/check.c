@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:08:44 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 15:42:09 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/26 16:34:53 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@ bool	null_check(t_map map)
 {
 	if (!map.no_path || !map.so_path || !map.we_path || !map.ea_path
 		|| map.size_x == 0 || map.size_y == 0 || !map.data
-		|| map.player.x == 0 || map.player.y == 0)
+		|| map.player.x == 0 || map.player.y == 0
+		|| *map.no_path == '\0' || *map.so_path == '\0'
+		|| *map.we_path == '\0' || *map.ea_path == '\0')
 	{
 		write(2, "Error\nMap is not well formated\n", 31);
-		if (!map.no_path)
+		if (!map.no_path || *map.no_path == '\0')
 			write(2, "NO texture is missing\n", 22);
-		if (!map.so_path)
+		if (!map.so_path || *map.so_path == '\0')
 			write(2, "SO texture is missing\n", 22);
-		if (!map.we_path)
+		if (!map.we_path || *map.we_path == '\0')
 			write(2, "WE texture is missing\n", 22);
-		if (!map.ea_path)
+		if (!map.ea_path || *map.ea_path == '\0')
 			write(2, "EA texture is missing\n", 22);
 		if (map.size_x == 0 || map.size_y == 0)
 			write(2, "Map size is missing\n", 21);
