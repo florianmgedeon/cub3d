@@ -21,6 +21,7 @@
 # define S 1
 # define D 2
 # define ESC 53
+# define PI 3.14159265359
 
 
 # include "../library/libft/include/libft.h"
@@ -57,8 +58,11 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	double	x;
-	double	y;
+	float	x;
+	float	y;
+	float	angle;
+	float	ray_end_x;
+	float	ray_end_y;
 	double	view;
 }	t_player;
 
@@ -76,8 +80,7 @@ typedef struct s_data
 	void			*test_wall;//just for testing
 	int				test_height;//just for testing
 	int				test_width;//just for testing
-	int				test_pos_x;//just for testing
-	int				test_pos_y;//just for testing
+	t_player		player;
 }	t_data;
 
 //window.c
