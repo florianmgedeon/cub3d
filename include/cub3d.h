@@ -74,4 +74,9 @@ typedef struct s_data
 	t_map			map;
 }	t_data;
 
+//window.c
+int start_win(t_data *data);
+void render(t_data *data);
+int x_the_win(t_data *data);
+
 #endif
