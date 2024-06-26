@@ -1,9 +1,12 @@
-NO ./path
-SO ./path
-EA ./path
-WE ./path
+NO
+SO ./path2
+EA ./path3
+WE ./path4
 
-1111
-1001
-1001
-1111
+F 220,100,0
+C 225,30,0
+
+111111
+  1001
+1110N1
+  1111

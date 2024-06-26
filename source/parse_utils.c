@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:46:55 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/25 14:02:00 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:52:19 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,18 @@ int	is_player(char c)
 	return (c == 'N' || c == 'S' || c == 'W' || c == 'E');
 }
 
-void	set_player(t_player *player, int x, int y, char c)
+bool	set_player(t_map *map, int x, char c)
 {
+	t_player	*player;
+
+	player = &map->player;
+	if (player->x != -1 || player->y != -1 || player->direction != -1)
+	{
+		write(2, "Error\nMultiple players in the map\n", 25);
+		return (false);
+	}
 	player->x = x;
-	player->y = y;
+	player->y = map->size_y - 1;
 	if (c == 'N')
 		player->direction = 0;
 	else if (c == 'E')
@@ -35,6 +43,7 @@ void	set_player(t_player *player, int x, int y, char c)
 		player->direction = 180;
 	else if (c == 'W')
 		player->direction = 270;
+	return (true);
 }
 
 bool	arg_check(int argc, char **argv)
@@ -52,28 +61,22 @@ bool	arg_check(int argc, char **argv)
 	return (true);
 }
 
-bool	map_check(t_map *map)
+//realloc the map when a new line is added
+int	**map_add_line(t_map *map, int *new_line)
 {
-	if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path
-		|| map->size_x == 0 || map->size_y == 0 || !map->data
-		|| map->player.x == 0 || map->player.y == 0)
+	int	**new_map_data;
+	int	i;
+
+	new_map_data = malloc((map->size_y) * sizeof(int *));
+	if (!new_map_data)
+		return (0);
+	i = 0;
+	while (i < map->size_y - 1)
 	{
-		write(2, "Error\nMap is not well formated\n", 31);
-		if (!map->no_path)
-			write(2, "NO texture is missing\n", 22);
-		if (!map->so_path)
-			write(2, "SO texture is missing\n", 22);
-		if (!map->we_path)
-			write(2, "WE texture is missing\n", 22);
-		if (!map->ea_path)
-			write(2, "EA texture is missing\n", 22);
-		if (map->size_x == 0 || map->size_y == 0)
-			write(2, "Map size is missing\n", 21);
-		if (!map->data)
-			write(2, "Map data is missing\n", 21);
-		if (map->player.x == 0 || map->player.y == 0)
-			write(2, "Player is missing\n", 19);
-		return (false);
-	}	
-	return (true);
+		new_map_data[i] = map->data[i];
+		i++;
+	}
+	new_map_data[i] = new_line;
+	free(map->data);
+	return (new_map_data);
 }

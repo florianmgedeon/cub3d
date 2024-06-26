@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/25 14:30:41 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:55:41 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,39 @@ typedef struct s_data
 	t_map			map;
 }	t_data;
 
+//check.c
+bool	map_check(t_map map);
+bool	null_check(t_map map);
+bool	color_check(t_map map);
+bool	player_check(t_player player);
+bool	valid_map_check(t_map map);
+
 //init.c
 void	init_data(t_data *data);
 void	init_player(t_player *player);
 void	init_colors(t_map *map);
-int		free_map(t_map *map);
+int		free_data(t_data *data);
 
 //main.c
 int		main(int argc, char **argv);
+bool	parse(t_data *data, char *file);
 
-//parse.c
-bool	parse_map(t_data *data, char *file);
+//parsing.c
 bool	manage_line(t_map *map, char *line);
 bool	parse_texture(char **path, char *line);
 bool	parse_color(t_color *color, char *line);
 bool	parse_map_data(t_map *map, char *line);
-int		**ft_realloc(int **old_map, int old_size, int new_size);
+void	update_map_size(t_map *map, int x);
 
 //parse_utils.c
 void	skip_spaces(char *line, int *i);
 int		is_player(char c);
-void	set_player(t_player *player, int x, int y, char c);
+bool	set_player(t_map *map, int x, char c);
 bool	arg_check(int argc, char **argv);
-bool	map_check(t_map *map);
+int		**map_add_line(t_map *map, int *new_line);
+
+//print.c
+void	print_map(t_map map);
+void	print_line(int *line, int size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:40:57 by jkoupy            #+#    #+#             */
-/*   Updated: 2023/11/17 14:52:51 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:29:46 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_atoi(const char *nptr)
 		if (nptr[i] >= '0' && nptr[i] <= '9')
 			result = (result * 10) + nptr[i] - '0';
 		else
-			return (6);
+			break ;
 		i++;
 	}
 	return (sign * result);

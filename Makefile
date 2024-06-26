@@ -6,7 +6,7 @@
 #    By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/18 14:59:11 by jkoupy            #+#    #+#              #
-#    Updated: 2024/06/25 13:30:01 by jkoupy           ###   ########.fr        #
+#    Updated: 2024/06/26 15:23:21 by jkoupy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ RM = rm -rf
 LIBFT =	library/libft/libft.a
 GETNEXTLINE = 	library/get_next_line/getnextline.a
 
-SRCS =	main.c parse.c parse_utils.c init.c
+SRCS =	main.c parse.c parse_utils.c init.c print.c check.c
 			
 OBJ_DIR = object/
 OBJS =  $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
