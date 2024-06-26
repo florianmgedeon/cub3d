@@ -72,6 +72,9 @@ typedef struct s_data
 	void			*mlx;
 	void			*win;
 	t_map			map;
+	void			*test_player;
+	int				test_height;
+	int				test_width;
 }	t_data;
 
 //window.c
