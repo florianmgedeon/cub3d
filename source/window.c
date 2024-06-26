@@ -41,11 +41,39 @@ int	x_the_win(t_data *data)
 	exit(0);
 }
 
+//just for testing
+void	put_map(t_data *data)
+{
+	int i = 0;
+	while (i <= 1150) {
+		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, i, 0);
+		i += 50; }
+	i = 0;
+	while (i <= 1150) {
+		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, i, 550);
+		i += 50; }
+	i = 0;
+	while (i <= 550) {
+		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 0, i);
+		i += 50; }
+	i = 0;
+	while (i <= 550) {
+		mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 1150, i);
+		i += 50; }
+	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 50);
+	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 100);
+	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 150);
+	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 200);
+	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 400, 250);
+	mlx_put_image_to_window(data->mlx, data->win, data->test_wall, 800, 400);
+}
+
 //puts images of the map to the window
 void	render(t_data *data)
 {
-	mlx_clear_window(data->mlx, data->win);//for testing
+	mlx_clear_window(data->mlx, data->win);//just for testing
 	mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->test_pos_x, data->test_pos_y);
+	put_map(data);//just for testing
 }
 
 //creates the window & loads files to images
@@ -56,6 +84,8 @@ int start_win(t_data *data)
 		return (0);
 	data->test_player = mlx_xpm_file_to_image(data->mlx, "./textures/test_player.xpm",
 			&data->test_height, &data->test_width);
+	data->test_wall = mlx_xpm_file_to_image(data->mlx, "./textures/test_wall.xpm",
+		&data->test_height, &data->test_width);
     
 	return (1);
 }
