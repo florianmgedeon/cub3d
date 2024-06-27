@@ -16,44 +16,24 @@
 int	key_hook(int keycode, t_data *data)
 {
     if (keycode == 100)//right
-    {
         data->player.x += 10;
-        data->player.ray_end_x = data->player.x + 15 + (60 * cos(data->player.angle));
-        data->player.ray_end_y = data->player.y + 15 + (60 * sin(data->player.angle));
-    }
     if (keycode == 115)//down
-    {
         data->player.y += 10;
-        data->player.ray_end_x = data->player.x + 15 + (60 * cos(data->player.angle));
-        data->player.ray_end_y = data->player.y + 15 + (60 * sin(data->player.angle));
-    }
     if (keycode == 97)//left
-    {
         data->player.x -= 10;
-        data->player.ray_end_x = data->player.x + 15 + (60 * cos(data->player.angle));
-        data->player.ray_end_y = data->player.y + 15 + (60 * sin(data->player.angle));
-    }
     if (keycode == 119)//up
-    {
         data->player.y -= 10;
-        data->player.ray_end_x = data->player.x + 15 + (60 * cos(data->player.angle));
-        data->player.ray_end_y = data->player.y + 15 + (60 * sin(data->player.angle));
-    }
     if (keycode == 65363)//right arrow
     {
-        data->player.angle += 0.1;
-        if (data->player.angle > 2 * PI)
-            data->player.angle -= (2 * PI);
-        data->player.ray_end_x = data->player.x + 15 + (60 * cos(data->player.angle));
-        data->player.ray_end_y = data->player.y + 15 + (60 * sin(data->player.angle));
+        data->player.angle_rad -= 0.1;
+        if (data->player.angle_rad > 2 * PI)
+            data->player.angle_rad -= (2 * PI);
     }
     if (keycode == 65361)//left arrow
     {
-        data->player.angle -= 0.1;
-        if (data->player.angle < 0)
-            data->player.angle += (2 * PI);
-        data->player.ray_end_x = data->player.x + 15 + (60 * cos(data->player.angle));
-        data->player.ray_end_y = data->player.y + 15 + (60 * sin(data->player.angle));
+        data->player.angle_rad += 0.1;
+        if (data->player.angle_rad < 0)
+            data->player.angle_rad += (2 * PI);
     }
     render(data);
     return (0);
@@ -64,6 +44,7 @@ int	x_the_win(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_image(data->mlx, data->test_player);
+    mlx_destroy_image(data->mlx, data->test_wall);
 	//more destroy here
 
 	mlx_destroy_display(data->mlx);
@@ -97,18 +78,8 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 {
 	int x = data->player.x + 15;
 	int y = data->player.y + 15;
-	int x1 = 0;
-	int y1 = 0;
-	if (end_x == 0 || end_y == 0)
-	{
-		x1 = data->player.ray_end_x;
-		y1 = data->player.ray_end_y;
-	}
-	else
-	{
-		x1 = end_x;
-		y1 = end_y;
-	}
+	int x1 = end_x;
+	int y1 = end_y;
 
 	int dx = abs(x1 - x);
 	int dy = abs(y1 - y);
@@ -152,27 +123,30 @@ void put_more_rays(t_data *data)
     int dof = 0;
     int map_index = 0;
     float testangle = 0;
+    int mapx = 0;
+    int mapy = 0;
 
 	//VERTICAL
-    while (i < 20)
+    while (i < 1)
     {
-        testangle = data->player.angle + i * 0.03;
+        testangle = data->player.angle_rad + (i * 0.017);
         if (testangle < 0)
             testangle += (2 * PI);
-        mytan = tan(PI - testangle - 0.0001);
+        //mytan = tan(PI - testangle - 0.0001);
+        mytan = tan(testangle);
         dof = 0;
         if(cos(testangle) <= -0.0001)//left
-        {
-            end_x = (((int)(data->player.x / 50) * 50) + 50);
-            end_y = (data->player.x - end_x) * mytan + data->player.y;
-            xoffset = 50;
-            yoffset = -xoffset * mytan;
-        }
-        else if(cos(testangle) >= 0.0001)//right
         {
             end_x = (((int)(data->player.x / 50) * 50) - 0.0001);
             end_y = (data->player.x - end_x) * mytan + data->player.y;
             xoffset = -50;
+            yoffset = -xoffset * mytan;
+        }
+        else if(cos(testangle) >= 0.0001)//right
+        {
+            end_x = (((int)(data->player.x / 50) * 50) + 50);
+            end_y = (data->player.x - end_x) * mytan + data->player.y;
+            xoffset = 50;
             yoffset = -xoffset * mytan;
         }
         else //up or down
@@ -183,7 +157,10 @@ void put_more_rays(t_data *data)
         }
         while (dof < 8)
         {
-            map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
+            //map_index = (int)end_x / 50 + (((int)end_y / 50) * 8);
+            mapx = (int)end_x / 50;
+            mapy = (int)end_y / 50;
+            map_index = mapy * 8 + mapx;
             if (map_index > 0 && map_index < 64 && data->test_content[map_index] == 1)
                 dof = 8;
             else
@@ -221,7 +198,10 @@ void put_more_rays(t_data *data)
         }
         while (dof < 8)
         {
-            map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
+            //map_index = (int)end_x / 50 + (((int)end_y / 50) * 8);
+            mapx = (int)end_x / 50;
+            mapy = (int)end_y / 50;
+            map_index = mapy * 8 + mapx;
             if (map_index > 0 && map_index < 64 && data->test_content[map_index] == 1)
                 dof = 8;
             else
@@ -244,7 +224,6 @@ void	render(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->player.x, data->player.y);
 	put_map(data);//just for testing
 	put_more_rays(data);//just for testing
-	//put_ray(data, 16777215, 0, 0);//just for testing MAIN RAY
 }
 
 //creates the window & loads files to images

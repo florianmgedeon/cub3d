@@ -15,7 +15,6 @@
 int main()
 {
     t_data	data;
-    int        ray_length = 60;//just for testing
 
     //belongs into init_data function:
     data.mlx = mlx_init();
@@ -26,9 +25,7 @@ int main()
     data.map.size_y = 600;
     data.player.x = 200;
     data.player.y = 200;
-    data.player.angle = 90;
-    data.player.ray_end_x = data.player.x + 15 + ray_length * cos(data.player.angle);
-    data.player.ray_end_y = data.player.y + 15 + ray_length * sin(data.player.angle);
+    data.player.angle_rad = 1.5;
     int test_content[] = {
     1,1,1,1,1,1,1,1,
 	1,0,1,0,0,0,0,1,

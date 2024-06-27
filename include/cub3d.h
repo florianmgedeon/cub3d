@@ -60,10 +60,7 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
-	float	angle;
-	float	ray_end_x;
-	float	ray_end_y;
-	double	view;
+	float	angle_rad;
 }	t_player;
 
 typedef struct s_data
