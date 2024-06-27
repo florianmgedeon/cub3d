@@ -22,7 +22,6 @@ int	key_hook(int keycode, t_data *data)
     }
     if (keycode == 97)//A
     {
-        // Strafe left
         data->player.x -= 10 * sin(data->player.angle_rad);
         data->player.y -= 10 * cos(data->player.angle_rad);
     }
@@ -33,7 +32,6 @@ int	key_hook(int keycode, t_data *data)
     }
     if (keycode == 100)//D
     {
-        // Strafe right
         data->player.x += 10 * sin(data->player.angle_rad);
         data->player.y += 10 * cos(data->player.angle_rad);
     }
@@ -140,13 +138,12 @@ void put_more_rays(t_data *data)
     int mapx = 0;
     int mapy = 0;
 
-	//VERTICAL
+	//VERTICAL (violet)
     while (i < 1)
     {
-        testangle = data->player.angle_rad + (i * 0.017);
+        testangle = data->player.angle_rad + (i * 0.017);//has to be cast differently for multiple rays
         if (testangle < 0)
             testangle += (2 * PI);
-        //mytan = tan(PI - testangle - 0.0001);
         mytan = tan(testangle);
         dof = 0;
         if(cos(testangle) <= -0.0001)//left
@@ -169,9 +166,8 @@ void put_more_rays(t_data *data)
             end_y = data->player.y;
             dof = 8;
         }
-        while (dof < 8)
+        while (dof < 8)//just for testing
         {
-            //map_index = (int)end_x / 50 + (((int)end_y / 50) * 8);
             mapx = (int)end_x / 50;
             mapy = (int)end_y / 50;
             map_index = mapy * 8 + mapx;
@@ -185,9 +181,9 @@ void put_more_rays(t_data *data)
             }
         }
         //Draw both for now, later only one
-        put_ray(data, 16711680, end_x, end_y);
+        put_ray(data, 15631086, end_x, end_y);
         
-        //HORIZONTAL
+        //HORIZONTAL(honey yellow)
         dof = 0;
         mytan = 1/mytan;
         if(sin(testangle) >= 0.0001)//up
@@ -212,7 +208,6 @@ void put_more_rays(t_data *data)
         }
         while (dof < 8)
         {
-            //map_index = (int)end_x / 50 + (((int)end_y / 50) * 8);
             mapx = (int)end_x / 50;
             mapy = (int)end_y / 50;
             map_index = mapy * 8 + mapx;
@@ -226,7 +221,7 @@ void put_more_rays(t_data *data)
             }
         }
         //Draw both for now, later only one
-        put_ray(data, 32768, end_x, end_y);
+        //put_ray(data, 16776960, end_x, end_y);
         i++;
     }
 }
