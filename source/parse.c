@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:55:26 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 16:33:23 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 13:54:09 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ bool	manage_line(t_map *map, char *line)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (line[i] == 'N' && line[i + 1] == 'O')
+	if (line[i] == 'N' && line[i + 1] == 'O' && map->data == NULL)
 		return (parse_texture(&map->no_path, line));
-	if (line[i] == 'S' && line[i + 1] == 'O')
+	if (line[i] == 'S' && line[i + 1] == 'O' && map->data == NULL)
 		return (parse_texture(&map->so_path, line));
-	if (line[i] == 'W' && line[i + 1] == 'E')
+	if (line[i] == 'W' && line[i + 1] == 'E' && map->data == NULL)
 		return (parse_texture(&map->we_path, line));
-	if (line[i] == 'E' && line[i + 1] == 'A')
+	if (line[i] == 'E' && line[i + 1] == 'A' && map->data == NULL)
 		return (parse_texture(&map->ea_path, line));
-	if (line[i] == 'F')
+	if (line[i] == 'F' && map->data == NULL)
 		return (parse_color(&map->floor, line));
-	if (line[i] == 'C')
+	if (line[i] == 'C' && map->data == NULL)
 		return (parse_color(&map->ceiling, line));
 	if (line[i] == '1')
 		return (parse_map_data(map, line));
@@ -47,7 +47,7 @@ bool	parse_texture(char **path, char *line)
 	int		j;
 	char	*new_path;
 
-	if (!line || !*line)
+	if (!line || !*line || *path)
 		return (0);
 	i = 0;
 	skip_spaces(line, &i);
@@ -67,21 +67,25 @@ bool	parse_texture(char **path, char *line)
 bool	parse_color(t_color *color, char *line)
 {
 	int		i;
-	t_color	new_color;
 
 	i = 0;
 	skip_spaces(line, &i);
 	i++;
-	new_color.r = ft_atoi(line + i);
+	skip_spaces(line, &i);
+	if (i < (int)ft_strlen(line) && ft_isdigit(line[i]))
+		color->r = ft_atoi(line + i);
 	while (line[i] && line[i] != ',')
 		i++;
+	i++;
 	skip_spaces(line, &i);
-	new_color.g = ft_atoi(line + i);
+	if (i < (int)ft_strlen(line) && ft_isdigit(line[i]))
+		color->g = ft_atoi(line + i);
 	while (line[i] && line[i] != ',')
 		i++;
+	i++;
 	skip_spaces(line, &i);
-	new_color.b = ft_atoi(line + i);
-	*color = new_color;
+	if (i < (int)ft_strlen(line) && ft_isdigit(line[i]))
+		color->b = ft_atoi(line + i);
 	return (true);
 }
 
@@ -91,10 +95,10 @@ bool	parse_map_data(t_map *map, char *line)
 	int	*new_line;
 
 	i = 0;
-	new_line = malloc((ft_strlen(line)) * sizeof(int));
+	new_line = malloc((ft_strlen(line) + 1) * sizeof(int));
 	if (!new_line)
 		return (0);
-	while (line[i])
+	while (line[i] && line[i] != '\n')
 	{
 		if (line[i] == ' ')
 			new_line[i++] = -1;
@@ -104,11 +108,10 @@ bool	parse_map_data(t_map *map, char *line)
 			new_line[i++] = 0;
 		else if (is_player(line[i]) && set_player(map, i, line[i]))
 			new_line[i++] = 2;
-		else if (line[i] == '\0' || line[i] == '\n')
-			break ;
 		else
 			return (0);
 	}
+	new_line[i] = -2;
 	update_map_size(map, i);
 	map->data = map_add_line(map, new_line);
 	return (1);

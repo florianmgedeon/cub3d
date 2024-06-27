@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:46:55 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 15:52:19 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 13:20:12 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	set_player(t_map *map, int x, char c)
 	player = &map->player;
 	if (player->x != -1 || player->y != -1 || player->direction != -1)
 	{
-		write(2, "Error\nMultiple players in the map\n", 25);
+		write(2, "Error\nMultiple players in the map\n", 35);
 		return (false);
 	}
 	player->x = x;

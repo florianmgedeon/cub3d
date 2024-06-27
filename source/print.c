@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:12:02 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 15:58:24 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 13:49:41 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_map(t_map map)
 	while (i < map.size_y)
 	{
 		j = 0;
-		while (j < map.size_x)
+		while (j < map.size_x && map.data[i][j] != -2)
 		{
 			if (map.data[i][j] == -1)
 				printf(" ");

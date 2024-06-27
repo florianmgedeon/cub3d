@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:08:44 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 16:34:53 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 13:48:35 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,17 @@ bool	color_check(t_map map)
 	ceiling = map.ceiling;
 	floor = map.floor;
 	if (floor.r == -1 || floor.g == -1 || floor.b == -1
-		|| ceiling.r == -1 || ceiling.g == -1 || ceiling.b == -1)
+		|| ceiling.r == -1 || ceiling.g == -1 || ceiling.b == -1
+		|| floor.r > 255 || floor.g > 255 || floor.b > 255
+		|| ceiling.r > 255 || ceiling.g > 255 || ceiling.b > 255)
 	{
 		write(2, "Error\nMap is not well formated\n", 31);
-		if (floor.r == -1 || floor.g == -1 || floor.b == -1)
-			write(2, "Floor color is missing/incorrect\n", 31);
-		if (ceiling.r == -1 || ceiling.g == -1 || ceiling.b == -1)
-			write(2, "Ceiling color is missing/incorrect\n", 34);
+		if (floor.r <= -1 || floor.g <= -1 || floor.b <= -1
+			|| floor.r > 255 || floor.g > 255 || floor.b > 255)
+			write(2, "Floor color is missing/incorrect\n", 33);
+		if (ceiling.r <= -1 || ceiling.g <= -1 || ceiling.b <= -1
+			|| ceiling.r > 255 || ceiling.g > 255 || ceiling.b > 255)
+			write(2, "Ceiling color is missing/incorrect\n", 35);
 		return (false);
 	}
 	return (true);
@@ -80,10 +84,7 @@ bool	player_check(t_player player)
 {
 	if (player.direction == -1 || player.x == -1 || player.y == -1)
 	{
-		if (player.direction == -1)
-			write(2, "Player direction is incorrect\n", 30);
-		if (player.x == -1 || player.y == -1)
-			write(2, "Player position is incorrect\n", 30);
+		write(2, "Error\nPlayer is missing\n", 24);
 		return (false);
 	}
 	return (true);
@@ -100,7 +101,7 @@ bool	valid_map_check(t_map map)
 	while (y < map.size_y)
 	{
 		x = 0;
-		while (x < map.size_x)
+		while (x < map.size_x && map.data[y][x] != -2)
 		{
 			if (map.data[y][x] == 0 || map.data[y][x] == 2)
 			{
@@ -110,7 +111,7 @@ bool	valid_map_check(t_map map)
 					|| map.data[y][x - 1] == -1 || map.data[y][x + 1] == -1)
 				{
 					write(2, "Error\nMap is not closed\n", 25);
-					return (false);
+					return (true);
 				}
 			}
 			x++;
