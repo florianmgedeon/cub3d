@@ -35,6 +35,7 @@
 # include <sys/time.h>  //gettimeofday
 # include <math.h> 		//math library
 # include <mlx.h> 		//MinilibX
+# include <stdbool.h> 	//bool
 
 typedef struct s_color
 {

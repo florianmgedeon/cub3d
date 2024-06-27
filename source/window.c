@@ -15,25 +15,39 @@
 //changes window when keys are pressed
 int	key_hook(int keycode, t_data *data)
 {
-    if (keycode == 100)//right
-        data->player.x += 10;
-    if (keycode == 115)//down
-        data->player.y += 10;
-    if (keycode == 97)//left
-        data->player.x -= 10;
-    if (keycode == 119)//up
-        data->player.y -= 10;
-    if (keycode == 65363)//right arrow
+    if (keycode == 119)//W
     {
-        data->player.angle_rad -= 0.1;
-        if (data->player.angle_rad > 2 * PI)
-            data->player.angle_rad -= (2 * PI);
+        data->player.x += 10 * cos(data->player.angle_rad);
+        data->player.y -= 10 * sin(data->player.angle_rad);
+    }
+    if (keycode == 97)//A
+    {
+        // Strafe left
+        data->player.x -= 10 * sin(data->player.angle_rad);
+        data->player.y -= 10 * cos(data->player.angle_rad);
+    }
+    if (keycode == 115)//S
+    {
+        data->player.x -= 10 * cos(data->player.angle_rad);
+        data->player.y += 10 * sin(data->player.angle_rad);
+    }
+    if (keycode == 100)//D
+    {
+        // Strafe right
+        data->player.x += 10 * sin(data->player.angle_rad);
+        data->player.y += 10 * cos(data->player.angle_rad);
     }
     if (keycode == 65361)//left arrow
     {
         data->player.angle_rad += 0.1;
         if (data->player.angle_rad < 0)
             data->player.angle_rad += (2 * PI);
+    }
+    if (keycode == 65363)//right arrow
+    {
+        data->player.angle_rad -= 0.1;
+        if (data->player.angle_rad > 2 * PI)
+            data->player.angle_rad -= (2 * PI);
     }
     render(data);
     return (0);
