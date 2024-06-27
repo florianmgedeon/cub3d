@@ -151,19 +151,24 @@ void put_more_rays(t_data *data)
     float yoffset = 0;
     int dof = 0;
     int map_index = 0;
+    float testangle = 0;
 
 	//VERTICAL
-    while (i < 1)
+    while (i < 20)
     {
-        mytan = tan(PI - data->player.angle - 0.0001);
-        if(cos(data->player.angle) <= -0.0001)//left
+        dof = 0;
+        testangle = data->player.angle + i * 0.03;
+        if (testangle < 0)
+            testangle += (2 * PI);
+        mytan = tan(PI - testangle - 0.0001);
+        if(cos(testangle) <= -0.0001)//left
         {
             end_x = (((int)(data->player.x / 50) * 50) + 50);
             end_y = (data->player.x - end_x) * mytan + data->player.y;
             xoffset = 50;
             yoffset = -xoffset * mytan;
         }
-        else if(cos(data->player.angle) >= 0.0001)//right
+        else if(cos(testangle) >= 0.0001)//right
         {
             end_x = (((int)(data->player.x / 50) * 50) - 0.0001);
             end_y = (data->player.x - end_x) * mytan + data->player.y;
@@ -188,6 +193,42 @@ void put_more_rays(t_data *data)
                 dof++;
             }
         }
+
+        //HORIZONTAL
+        // dof = 0;
+        // if(cos(testangle) <= -0.0001)//left
+        // {
+        //     end_x = (((int)(data->player.x / 50) * 50) + 50);
+        //     end_y = (data->player.x - end_x) * mytan + data->player.y;
+        //     xoffset = 50;
+        //     yoffset = -xoffset * mytan;
+        // }
+        // else if(cos(testangle) >= 0.0001)//right
+        // {
+        //     end_x = (((int)(data->player.x / 50) * 50) - 0.0001);
+        //     end_y = (data->player.x - end_x) * mytan + data->player.y;
+        //     xoffset = -50;
+        //     yoffset = -xoffset * mytan;
+        // }
+        // else //up or down
+        // {
+        //     end_x = data->player.x;
+        //     end_y = data->player.y;
+        //     dof = 8;
+        // }
+        // while (dof < 8)
+        // {
+        //     map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
+        //     if (map_index < 64 && data->test_content[map_index] == 1)
+        //         dof = 8;
+        //     else
+        //     {
+        //         end_x += xoffset;
+        //         end_y += yoffset;
+        //         dof++;
+        //     }
+        // }
+        //Draw both for now, later only one
         put_ray(data, 16711680, end_x, end_y);
         i++;
     }
