@@ -155,22 +155,22 @@ void put_more_rays(t_data *data)
 	//VERTICAL
     while (i < 1)
     {
-        mytan = tan(PI - data->player.angle - 0.0000001);
-        if(cos(data->player.angle) >= 0.0001) //looking left
+        mytan = tan(PI - data->player.angle - 0.0001);
+        if(cos(data->player.angle) <= -0.0001)//left
         {
             end_x = (((int)(data->player.x / 50) * 50) + 50);
             end_y = (data->player.x - end_x) * mytan + data->player.y;
             xoffset = 50;
             yoffset = -xoffset * mytan;
         }
-        else if(cos(data->player.angle) <= -0.0001) //looking right
+        else if(cos(data->player.angle) >= 0.0001)//right
         {
-            end_x = (((int)(data->player.x / 50) * 50) - 0.0000001);
+            end_x = (((int)(data->player.x / 50) * 50) - 0.0001);
             end_y = (data->player.x - end_x) * mytan + data->player.y;
             xoffset = -50;
             yoffset = -xoffset * mytan;
         }
-        else //looking up or down
+        else //up or down
         {
             end_x = data->player.x;
             end_y = data->player.y;
