@@ -156,11 +156,11 @@ void put_more_rays(t_data *data)
 	//VERTICAL
     while (i < 20)
     {
-        dof = 0;
         testangle = data->player.angle + i * 0.03;
         if (testangle < 0)
             testangle += (2 * PI);
         mytan = tan(PI - testangle - 0.0001);
+        dof = 0;
         if(cos(testangle) <= -0.0001)//left
         {
             end_x = (((int)(data->player.x / 50) * 50) + 50);
@@ -184,7 +184,7 @@ void put_more_rays(t_data *data)
         while (dof < 8)
         {
             map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
-            if (map_index < 64 && data->test_content[map_index] == 1)
+            if (map_index > 0 && map_index < 64 && data->test_content[map_index] == 1)
                 dof = 8;
             else
             {
@@ -193,43 +193,46 @@ void put_more_rays(t_data *data)
                 dof++;
             }
         }
-
-        //HORIZONTAL
-        // dof = 0;
-        // if(cos(testangle) <= -0.0001)//left
-        // {
-        //     end_x = (((int)(data->player.x / 50) * 50) + 50);
-        //     end_y = (data->player.x - end_x) * mytan + data->player.y;
-        //     xoffset = 50;
-        //     yoffset = -xoffset * mytan;
-        // }
-        // else if(cos(testangle) >= 0.0001)//right
-        // {
-        //     end_x = (((int)(data->player.x / 50) * 50) - 0.0001);
-        //     end_y = (data->player.x - end_x) * mytan + data->player.y;
-        //     xoffset = -50;
-        //     yoffset = -xoffset * mytan;
-        // }
-        // else //up or down
-        // {
-        //     end_x = data->player.x;
-        //     end_y = data->player.y;
-        //     dof = 8;
-        // }
-        // while (dof < 8)
-        // {
-        //     map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
-        //     if (map_index < 64 && data->test_content[map_index] == 1)
-        //         dof = 8;
-        //     else
-        //     {
-        //         end_x += xoffset;
-        //         end_y += yoffset;
-        //         dof++;
-        //     }
-        // }
         //Draw both for now, later only one
         put_ray(data, 16711680, end_x, end_y);
+        
+        //HORIZONTAL
+        dof = 0;
+        mytan = 1/mytan;
+        if(sin(testangle) >= 0.0001)//up
+        {
+            end_y = (((int)(data->player.y / 50) * 50) - 0.0001);
+            end_x = (data->player.y - end_y) * mytan + data->player.x;
+            yoffset = -50;
+            xoffset = -yoffset * mytan;
+        }
+        else if(sin(testangle) <= -0.0001)//down
+        {
+            end_y = (((int)(data->player.y / 50) * 50) + 50);
+            end_x = (data->player.y - end_y) * mytan + data->player.x;
+            yoffset = 50;
+            xoffset = -yoffset * mytan;
+        }
+        else //left or right
+        {
+            end_x = data->player.x;
+            end_y = data->player.y;
+            dof = 8;
+        }
+        while (dof < 8)
+        {
+            map_index = (int)end_x / 50 + (int)end_y / 50 * 8;
+            if (map_index > 0 && map_index < 64 && data->test_content[map_index] == 1)
+                dof = 8;
+            else
+            {
+                end_x += xoffset;
+                end_y += yoffset;
+                dof++;
+            }
+        }
+        //Draw both for now, later only one
+        put_ray(data, 32768, end_x, end_y);
         i++;
     }
 }
