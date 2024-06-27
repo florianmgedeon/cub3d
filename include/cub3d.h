@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 15:55:41 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 14:23:22 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define S 1
 # define D 2
 # define ESC 53
+# define PI 3.14159265359
 
 # include "../library/libft/include/libft.h"
 # include "../library/get_next_line/include/get_next_line.h"
@@ -46,7 +47,7 @@ typedef struct s_player
 {
 	double	x;
 	double	y;
-	double	direction;
+	double	angle;
 }	t_player;
 
 typedef struct s_map
@@ -79,7 +80,6 @@ typedef struct s_data
 bool	map_check(t_map map);
 bool	null_check(t_map map);
 bool	color_check(t_map map);
-bool	player_check(t_player player);
 bool	valid_map_check(t_map map);
 
 //init.c

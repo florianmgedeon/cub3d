@@ -6,12 +6,14 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:12:02 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 13:49:41 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 14:31:56 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+//test function to print the map
+//and all the data
 void	print_map(t_map map)
 {
 	int	i;
@@ -23,7 +25,7 @@ void	print_map(t_map map)
 	printf("F: %d %d %d\n", map.floor.r, map.floor.g, map.floor.b);
 	printf("C: %d %d %d\n", map.ceiling.r, map.ceiling.g, map.ceiling.b);
 	printf("size_x: %d\nsize_y: %d\n\n", map.size_x, map.size_y);
-	printf("player: %f %f %f\n", map.player.x, map.player.y, map.player.direction);
+	printf("player: %f %f %f\n", map.player.x, map.player.y, map.player.angle);
 	printf("map:\n");
 	while (i < map.size_y)
 	{
@@ -41,6 +43,7 @@ void	print_map(t_map map)
 	}
 }
 
+//test function to print line of ints
 //print line of ints
 void	print_line(int *line, int size)
 {

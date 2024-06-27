@@ -6,12 +6,11 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:55:26 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 13:54:09 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 14:31:08 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 //manage lines depending on the first character
 bool	manage_line(t_map *map, char *line)
@@ -40,7 +39,7 @@ bool	manage_line(t_map *map, char *line)
 	return (0);
 }
 
-//parse the texture path,
+//parse the texture path
 bool	parse_texture(char **path, char *line)
 {
 	int		i;
@@ -64,6 +63,9 @@ bool	parse_texture(char **path, char *line)
 	return (1);
 }
 
+//parse the color format 
+//[space][C/F][space][int][space][,][space][int][space][,][space][int]
+//spaces are optional, ints have to start with a digit
 bool	parse_color(t_color *color, char *line)
 {
 	int		i;
@@ -89,6 +91,7 @@ bool	parse_color(t_color *color, char *line)
 	return (true);
 }
 
+//parse the map data and add it to the map
 bool	parse_map_data(t_map *map, char *line)
 {
 	int	i;
@@ -117,10 +120,10 @@ bool	parse_map_data(t_map *map, char *line)
 	return (1);
 }
 
+//updates size_x and size_y of the map
 void	update_map_size(t_map *map, int x)
 {
 	if (x > map->size_x)
 		map->size_x = x;
 	map->size_y++;
 }
-

@@ -6,29 +6,33 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:46:55 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 13:20:12 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 14:24:49 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+//skip spaces in a string and update the i
 void	skip_spaces(char *line, int *i)
 {
 	while (line[*i] == ' ')
 		(*i)++;
 }
 
+//check if a char is a player
 int	is_player(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'W' || c == 'E');
 }
 
+//set the player position and angle
+//error if multiple players
 bool	set_player(t_map *map, int x, char c)
 {
 	t_player	*player;
 
 	player = &map->player;
-	if (player->x != -1 || player->y != -1 || player->direction != -1)
+	if (player->x != -1 || player->y != -1 || player->angle != -1)
 	{
 		write(2, "Error\nMultiple players in the map\n", 35);
 		return (false);
@@ -36,16 +40,17 @@ bool	set_player(t_map *map, int x, char c)
 	player->x = x;
 	player->y = map->size_y - 1;
 	if (c == 'N')
-		player->direction = 0;
+		player->angle = 0;
 	else if (c == 'E')
-		player->direction = 90;
+		player->angle = PI / 2;
 	else if (c == 'S')
-		player->direction = 180;
+		player->angle = PI;
 	else if (c == 'W')
-		player->direction = 270;
+		player->angle = PI * 3 / 2;
 	return (true);
 }
 
+//check argc and file extension
 bool	arg_check(int argc, char **argv)
 {
 	if (argc != 2)

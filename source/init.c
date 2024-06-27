@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:30:08 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 15:44:33 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/06/27 14:32:38 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_player(t_player *player)
 {
 	player->x = -1;
 	player->y = -1;
-	player->direction = -1;
+	player->angle = -1;
 }
 
 void	init_colors(t_map *map)
@@ -42,6 +42,7 @@ void	init_colors(t_map *map)
 	map->ceiling.b = -1;
 }
 
+//free the allocated data
 int	free_data(t_data *data)
 {
 	int	i;
