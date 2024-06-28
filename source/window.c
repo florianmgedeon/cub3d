@@ -66,7 +66,7 @@ int	x_the_win(t_data *data)
 	//more destroy here
 
 	mlx_destroy_display(data->mlx);
-	//free map memory here
+	free(data->test_map);
 	free(data->mlx);
 	exit(0);
 }
@@ -133,7 +133,7 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 void calc_ray(t_data *data)
 {
     int i = 0;
-    int w = 10;
+    int w = 1;
     double camera_x;
     double ray_dir_x;
     double ray_dir_y;
@@ -182,6 +182,7 @@ void calc_ray(t_data *data)
                 side_dist_x += delta_dist_x;
                 map_x += step_x;
                 side = 0;
+
             }
             else
             {
@@ -192,7 +193,21 @@ void calc_ray(t_data *data)
             if (data->test_map[map_y][map_x] > 0)
                 hit = 1;
         }
-        put_ray(data, 16711680, map_x, map_y);
+        float perpWallDist;
+        if(side == 0) 
+            perpWallDist = (side_dist_x - delta_dist_x);
+        else          
+            perpWallDist = (side_dist_y - delta_dist_y);
+        if (side == 0)
+        {
+            //put_ray(data, 30000000, data->player.x + side_dist_x, data->player.y);
+            put_ray(data, 16711680, data->player.x + perpWallDist * ray_dir_x, data->player.y + perpWallDist * ray_dir_y);
+        }
+        else
+        {
+            //put_ray(data, 70000000, data->player.x + side_dist_y, data->player.y);
+            put_ray(data, 16711680, data->player.x + perpWallDist * ray_dir_x, data->player.y + perpWallDist * ray_dir_y);
+        }
         i++;
     }
 }
@@ -200,7 +215,7 @@ void calc_ray(t_data *data)
 //puts images of the map to the window
 void	render(t_data *data)
 {
-	mlx_clear_window(data->mlx, data->win);//just for testing
+	//mlx_clear_window(data->mlx, data->win);//just for testing
 	//mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->player.x * data->map.tile_size, data->player.y * data->map.tile_size);
 	put_map(data);//just for testing
 	calc_ray(data);
@@ -209,7 +224,7 @@ void	render(t_data *data)
 //creates the window & loads files to images
 int start_win(t_data *data)
 {
-	data->win = mlx_new_window(data->mlx, data->map.size_x * data->map.tile_size, data->map.size_y * data->map.tile_size, "cub3D");
+	data->win = mlx_new_window(data->mlx, data->map.size_x * data->map.tile_size *2, data->map.size_y * data->map.tile_size *2, "cub3D");
 	if (!data->win)
 		return (0);
 	data->test_player = mlx_xpm_file_to_image(data->mlx, "./textures/test_player.xpm",
