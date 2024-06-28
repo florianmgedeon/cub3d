@@ -12,44 +12,50 @@
 
 #include "../include/cub3d.h"
 
-//changes window when keys are pressed
+//changes window when keys are pressed - CHANGE TO DIR VECTOR MULTIPLICATION
+
 int	key_hook(int keycode, t_data *data)
 {
-    if (keycode == 119)//W
-    {
-        data->player.x += 10 * cos(data->player.angle_rad);
-        data->player.y -= 10 * sin(data->player.angle_rad);
-    }
-    if (keycode == 97)//A
-    {
-        data->player.x -= 10 * sin(data->player.angle_rad);
-        data->player.y -= 10 * cos(data->player.angle_rad);
-    }
-    if (keycode == 115)//S
-    {
-        data->player.x -= 10 * cos(data->player.angle_rad);
-        data->player.y += 10 * sin(data->player.angle_rad);
-    }
-    if (keycode == 100)//D
-    {
-        data->player.x += 10 * sin(data->player.angle_rad);
-        data->player.y += 10 * cos(data->player.angle_rad);
-    }
+    float old_dir_x = data->player.dir_x;
+    float old_plane_x = data->player.plane_x;
+    // if (keycode == 119)//W
+    // {
+    //     data->player.x += cos(data->player.angle_rad) / 10;
+    //     data->player.y -= sin(data->player.angle_rad) / 10;
+    // }
+    // if (keycode == 97)//A
+    // {
+    //     data->player.x -= sin(data->player.angle_rad) / 10;
+    //     data->player.y -= cos(data->player.angle_rad) / 10;
+    // }
+    // if (keycode == 115)//S
+    // {
+    //     data->player.x -= cos(data->player.angle_rad) / 10;
+    //     data->player.y += sin(data->player.angle_rad) / 10;
+    // }
+    // if (keycode == 100)//D
+    // {
+    //     data->player.x += sin(data->player.angle_rad) / 10;
+    //     data->player.y += cos(data->player.angle_rad) / 10;
+    // }
     if (keycode == 65361)//left arrow
     {
-        data->player.angle_rad += 0.1;
-        if (data->player.angle_rad < 0)
-            data->player.angle_rad += (2 * PI);
+        data->player.dir_x = data->player.dir_x * cos(-0.1) - data->player.dir_y * sin(-0.1);
+        data->player.dir_y = old_dir_x * sin(-0.1) + data->player.dir_y * cos(-0.1);
+        data->player.plane_x = data->player.plane_x * cos(-0.1) - data->player.plane_y * sin(-0.1);
+        data->player.plane_y = old_plane_x * sin(-0.1) + data->player.plane_y * cos(-0.1);
     }
     if (keycode == 65363)//right arrow
     {
-        data->player.angle_rad -= 0.1;
-        if (data->player.angle_rad > 2 * PI)
-            data->player.angle_rad -= (2 * PI);
+        data->player.dir_x = data->player.dir_x * cos(0.1) - data->player.dir_y * sin(0.1);
+        data->player.dir_y = old_dir_x * sin(0.1) + data->player.dir_y * cos(0.1);
+        data->player.plane_x = data->player.plane_x * cos(0.1) - data->player.plane_y * sin(0.1);
+        data->player.plane_y = old_plane_x * sin(0.1) + data->player.plane_y * cos(0.1);
     }
     render(data);
     return (0);
 }
+
 
 //cleans up if window is closed
 int	x_the_win(t_data *data)
@@ -76,7 +82,7 @@ void	put_map(t_data *data)
 	{
 		while (x < 8)
 		{
-			if (data->test_content[i] == 1)
+			if (data->test_map[y][x] == 1)
 				mlx_put_image_to_window(data->mlx, data->win, data->test_wall, x * 50, y * 50);
 			x++;
 			i++;
@@ -88,10 +94,10 @@ void	put_map(t_data *data)
 
 void put_ray(t_data *data, int color, float end_x, float end_y)
 {
-	int x = data->player.x + 15;
-	int y = data->player.y + 15;
-	int x1 = end_x;
-	int y1 = end_y;
+	int x = data->player.x * data->map.tile_size;
+	int y = data->player.y * data->map.tile_size;
+	int x1 = end_x * data->map.tile_size;
+	int y1 = end_y * data->map.tile_size;
 
 	int dx = abs(x1 - x);
 	int dy = abs(y1 - y);
@@ -124,104 +130,69 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 
 }
 
-void put_more_rays(t_data *data)
+void calc_ray(t_data *data)
 {
     int i = 0;
-    float end_x = 0;
-    float end_y = 0;
-    float mytan = 0;
-    float xoffset = 0;
-    float yoffset = 0;
-    int dof = 0;
-    int map_index = 0;
-    float testangle = 0;
-    int mapx = 0;
-    int mapy = 0;
+    int w = 10;
+    double camera_x;
+    double ray_dir_x;
+    double ray_dir_y;
+    int map_x = (int)data->player.x;
+    int map_y = (int)data->player.y;
+    double side_dist_x;
+    double side_dist_y;
+    double delta_dist_x;
+    double delta_dist_y;
+    int step_x;
+    int step_y;
+    int hit = 0;
+    int side;
 
-	//VERTICAL (violet)
-    while (i < 1)
+    while (i < w)
     {
-        testangle = data->player.angle_rad + (i * 0.017);//has to be cast differently for multiple rays
-        if (testangle < 0)
-            testangle += (2 * PI);
-        mytan = tan(testangle);
-        dof = 0;
-        if(cos(testangle) <= -0.0001)//left
+        camera_x = 2 * i / w - 1;
+        ray_dir_x = data->player.dir_x + data->player.plane_x * camera_x;
+        ray_dir_y = data->player.dir_y + data->player.plane_y * camera_x;
+        delta_dist_x = fabs(1 / ray_dir_x);
+        delta_dist_y = fabs(1 / ray_dir_y);
+        if (ray_dir_x < 0)//init step and side_dist
         {
-            end_x = (((int)(data->player.x / 50) * 50) - 0.0001);
-            end_y = (data->player.x - end_x) * mytan + data->player.y;
-            xoffset = -50;
-            yoffset = -xoffset * mytan;
+            step_x = -1;
+            side_dist_x = (data->player.x - map_x) * delta_dist_x;
         }
-        else if(cos(testangle) >= 0.0001)//right
+        else
         {
-            end_x = (((int)(data->player.x / 50) * 50) + 50);
-            end_y = (data->player.x - end_x) * mytan + data->player.y;
-            xoffset = 50;
-            yoffset = -xoffset * mytan;
+            step_x = 1;
+            side_dist_x = (map_x + 1.0 - data->player.x) * delta_dist_x;
         }
-        else //up or down
+        if (ray_dir_y < 0)
         {
-            end_x = data->player.x;
-            end_y = data->player.y;
-            dof = 8;
+            step_y = -1;
+            side_dist_y = (data->player.y - map_y) * delta_dist_y;
         }
-        while (dof < 8)//just for testing
+        else
         {
-            mapx = (int)end_x / 50;
-            mapy = (int)end_y / 50;
-            map_index = mapy * 8 + mapx;
-            if (map_index > 0 && map_index < 64 && data->test_content[map_index] == 1)
-                dof = 8;
+            step_y = 1;
+            side_dist_y = (map_y + 1.0 - data->player.y) * delta_dist_y;
+        }
+        while (hit == 0)//DDA loop
+        {
+            if (side_dist_x < side_dist_y)
+            {
+                side_dist_x += delta_dist_x;
+                map_x += step_x;
+                side = 0;
+            }
             else
             {
-                end_x += xoffset;
-                end_y += yoffset;
-                dof++;
+                side_dist_y += delta_dist_y;
+                map_y += step_y;
+                side = 1;
             }
+            if (data->test_map[map_y][map_x] > 0)
+                hit = 1;
         }
-        //Draw both for now, later only one
-        put_ray(data, 15631086, end_x, end_y);
-        
-        //HORIZONTAL(honey yellow)
-        dof = 0;
-        mytan = 1/mytan;
-        if(sin(testangle) >= 0.0001)//up
-        {
-            end_y = (((int)(data->player.y / 50) * 50) - 0.0001);
-            end_x = (data->player.y - end_y) * mytan + data->player.x;
-            yoffset = -50;
-            xoffset = -yoffset * mytan;
-        }
-        else if(sin(testangle) <= -0.0001)//down
-        {
-            end_y = (((int)(data->player.y / 50) * 50) + 50);
-            end_x = (data->player.y - end_y) * mytan + data->player.x;
-            yoffset = 50;
-            xoffset = -yoffset * mytan;
-        }
-        else //left or right
-        {
-            end_x = data->player.x;
-            end_y = data->player.y;
-            dof = 8;
-        }
-        while (dof < 8)
-        {
-            mapx = (int)end_x / 50;
-            mapy = (int)end_y / 50;
-            map_index = mapy * 8 + mapx;
-            if (map_index > 0 && map_index < 64 && data->test_content[map_index] == 1)
-                dof = 8;
-            else
-            {
-                end_x += xoffset;
-                end_y += yoffset;
-                dof++;
-            }
-        }
-        //Draw both for now, later only one
-        //put_ray(data, 16776960, end_x, end_y);
+        put_ray(data, 16711680, map_x, map_y);
         i++;
     }
 }
@@ -230,15 +201,15 @@ void put_more_rays(t_data *data)
 void	render(t_data *data)
 {
 	mlx_clear_window(data->mlx, data->win);//just for testing
-	mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->player.x, data->player.y);
+	//mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->player.x * data->map.tile_size, data->player.y * data->map.tile_size);
 	put_map(data);//just for testing
-	put_more_rays(data);//just for testing
+	calc_ray(data);
 }
 
 //creates the window & loads files to images
 int start_win(t_data *data)
 {
-	data->win = mlx_new_window(data->mlx, data->map.size_x, data->map.size_y, "cub3D");
+	data->win = mlx_new_window(data->mlx, data->map.size_x * data->map.tile_size, data->map.size_y * data->map.tile_size, "cub3D");
 	if (!data->win)
 		return (0);
 	data->test_player = mlx_xpm_file_to_image(data->mlx, "./textures/test_player.xpm",

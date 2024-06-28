@@ -52,6 +52,7 @@ typedef struct s_map
 	char 		*ea_path;
 	t_color		floor;
 	t_color		ceiling;
+	int			tile_size;
 	int			size_x;
 	int			size_y;
 	int			**data;
@@ -61,7 +62,11 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
-	float	angle_rad;
+	float	dir_x;
+	float	dir_y;
+	float	plane_x;
+	float	plane_y;
+	//float	angle_rad;
 }	t_player;
 
 typedef struct s_data
@@ -78,7 +83,7 @@ typedef struct s_data
 	void			*test_wall;//just for testing
 	int				test_height;//just for testing
 	int				test_width;//just for testing
-	int				*test_content;//just for testing
+	int				**test_map;//just for testing
 	t_player		player;
 }	t_data;
 
