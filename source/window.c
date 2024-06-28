@@ -133,7 +133,7 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 void calc_ray(t_data *data)
 {
     int i = 0;
-    int w = 1;
+    int w = 120;
     double camera_x;
     double ray_dir_x;
     double ray_dir_y;
@@ -148,9 +148,12 @@ void calc_ray(t_data *data)
     int hit = 0;
     int side;
 
-    while (i < w)
+    while (i <= w)
     {
-        camera_x = 2 * i / w - 1;
+        hit = 0;
+        map_x = (int)data->player.x;
+        map_y = (int)data->player.y;
+        camera_x = 2 * i / (double)w - 1;
         ray_dir_x = data->player.dir_x + data->player.plane_x * camera_x;
         ray_dir_y = data->player.dir_y + data->player.plane_y * camera_x;
         delta_dist_x = fabs(1 / ray_dir_x);
@@ -215,7 +218,7 @@ void calc_ray(t_data *data)
 //puts images of the map to the window
 void	render(t_data *data)
 {
-	//mlx_clear_window(data->mlx, data->win);//just for testing
+	mlx_clear_window(data->mlx, data->win);//just for testing
 	//mlx_put_image_to_window(data->mlx, data->win, data->test_player, data->player.x * data->map.tile_size, data->player.y * data->map.tile_size);
 	put_map(data);//just for testing
 	calc_ray(data);
