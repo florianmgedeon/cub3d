@@ -40,8 +40,9 @@ bool	null_check(t_map map)
 		error = write(2, "Error\nEA texture is missing\n", 28);
 	if (!map.data || map.size_x == 0 || map.size_y == 0)
 		error = write(2, "Error\nMap data is missing\n", 27);
-	if (map.player.x == -1 || map.player.y == -1 || map.player.angle == -1)
-		error = write(2, "Error\nPlayer is missing\n", 19);
+	if (map.player.x == -1 || map.player.y == -1
+		|| map.player.dir_x == -2 || map.player.dir_y == -2)
+		error = write(2, "Error\nPlayer is missing\n", 24);
 	if (map.floor.r == -1 || map.floor.g == -1 || map.floor.b == -1)
 		error = write(2, "Error\nFloor color is missing\n", 29);
 	if (map.ceiling.r == -1 || map.ceiling.g == -1 || map.ceiling.b == -1)

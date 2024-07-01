@@ -45,6 +45,16 @@ typedef struct s_color
 	int	b;	
 }	t_color;
 
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	dir_x;
+	float	dir_y;
+	float	plane_x;
+	float	plane_y;
+}	t_player;
+
 typedef struct s_map
 {
 	char		*no_path;
@@ -59,17 +69,6 @@ typedef struct s_map
 	int			**data;
 	t_player	player;
 }	t_map;
-
-typedef struct s_player
-{
-	float	x;
-	float	y;
-	float	dir_x;
-	float	dir_y;
-	float	plane_x;
-	float	plane_y;
-	//float	angle_rad;
-}	t_player;
 
 typedef struct s_data
 {
@@ -98,6 +97,7 @@ bool	valid_map_check(t_map map);
 //init.c
 void	init_data(t_data *data);
 void	init_player(t_player *player);
+void	set_dir(t_player *player, char c);
 void	init_colors(t_map *map);
 int		free_data(t_data *data);
 

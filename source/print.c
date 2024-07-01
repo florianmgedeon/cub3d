@@ -25,7 +25,7 @@ void	print_map(t_map map)
 	printf("F: %d %d %d\n", map.floor.r, map.floor.g, map.floor.b);
 	printf("C: %d %d %d\n", map.ceiling.r, map.ceiling.g, map.ceiling.b);
 	printf("size_x: %d\nsize_y: %d\n\n", map.size_x, map.size_y);
-	printf("player: %f %f %f\n", map.player.x, map.player.y, map.player.angle);
+	printf("player: %f %f %f %f\n", map.player.x, map.player.y, map.player.dir_x, map.player.dir_y);
 	printf("map:\n");
 	while (i < map.size_y)
 	{

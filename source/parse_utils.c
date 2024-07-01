@@ -32,22 +32,37 @@ bool	set_player(t_map *map, int x, char c)
 	t_player	*player;
 
 	player = &map->player;
-	if (player->x != -1 || player->y != -1 || player->angle != -1)
-	{
-		write(2, "Error\nMultiple players in the map\n", 35);
-		return (false);
-	}
+	if (player->x != -1 || player->y != -1 || player->dir_x != -2 || player->dir_y != -2)	
+		return (write(2, "Error\nMultiple players in the map\n", 35), false);
 	player->x = x;
 	player->y = map->size_y - 1;
-	if (c == 'N')
-		player->angle = 0;
-	else if (c == 'E')
-		player->angle = PI / 2;
-	else if (c == 'S')
-		player->angle = PI;
-	else if (c == 'W')
-		player->angle = PI * 3 / 2;
+	set_dir(player, c);
 	return (true);
+}
+
+//set the player direction
+void	set_dir(t_player *player, char c)
+{
+	if (c == 'N')
+	{
+		player->dir_x = 0;
+		player->dir_y = -1;
+	}
+	else if (c == 'E')
+	{
+		player->dir_x = 1;
+		player->dir_y = 0;
+	}
+	else if (c == 'S')
+	{
+		player->dir_x = 0;
+		player->dir_y = 1;
+	}
+	else if (c == 'W')
+	{
+		player->dir_x = -1;
+		player->dir_y = 0;
+	}
 }
 
 //check argc and file extension
