@@ -96,6 +96,7 @@ bool	valid_map_check(t_map map);
 void	init_data(t_data *data);
 void	init_player(t_player *player);
 void	set_dir(t_player *player, char c);
+void	set_plane(t_player *player, char c);
 void	init_colors(t_map *map);
 int		free_data(t_data *data);
 

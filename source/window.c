@@ -214,7 +214,6 @@ void calc_ray(t_data *data)
             put_ray(data, 16711680, data->map.player.x + perpWallDist * ray_dir_x, data->map.player.y + perpWallDist * ray_dir_y);
         else
             put_ray(data, 16711680, data->map.player.x + perpWallDist * ray_dir_x, data->map.player.y + perpWallDist * ray_dir_y);
-        printf("playerx: %f, playery: %f\n", data->map.player.x, data->map.player.y);
         i++;
     }
 }
