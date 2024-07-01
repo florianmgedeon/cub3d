@@ -112,7 +112,10 @@ bool	parse_map_data(t_map *map, char *line)
 		else if (is_player(line[i]) && set_player(map, i, line[i]))
 			new_line[i++] = 2;
 		else
+		{
+			free(new_line);
 			return (0);
+		}
 	}
 	new_line[i] = -2;
 	update_map_size(map, i);

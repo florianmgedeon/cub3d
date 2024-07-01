@@ -35,7 +35,7 @@ bool	set_player(t_map *map, int x, char c)
 	if (player->x != -1 || player->y != -1 || player->dir_x != -2 || player->dir_y != -2)	
 		return (write(2, "Error\nMultiple players in the map\n", 35), false);
 	player->x = x;
-	player->y = map->size_y - 1;
+	player->y = map->size_y;
 	set_dir(player, c);
 	return (true);
 }
