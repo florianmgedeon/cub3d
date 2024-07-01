@@ -25,6 +25,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
+MLXFLAGS = -lmlx -lXext -lX11 -lm
 RFLAGS = -lreadline
 DEPFLAGS = -MT $@ -MMD -MP -MF $(OBJ_DIR)/$*.d
 RM = rm -rf
@@ -32,7 +33,7 @@ RM = rm -rf
 LIBFT =	library/libft/libft.a
 GETNEXTLINE = 	library/get_next_line/getnextline.a
 
-SRCS =	main.c parse.c parse_utils.c init.c print.c check.c
+SRCS =	main.c parse.c parse_utils.c init.c print.c check.c window.c
 			
 OBJ_DIR = object/
 OBJS =  $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
@@ -46,7 +47,7 @@ object/%.o: source/%.c
 	@$(CC) -c $(CFLAGS) $(DEPFLAGS) $< -o $@
 
 $(NAME): $(LIBFT) $(GETNEXTLINE) $(OBJS) 
-	@$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(GETNEXTLINE) -o $(NAME) $(RFLAGS)
+	@$(CC) $(OBJS) $(MLXFLAGS) $(CFLAGS) $(LIBFT) $(GETNEXTLINE) -o $(NAME) $(RFLAGS)
 	@$(RM) heredocs
 	@mkdir heredocs
 	@printf "\r$(GREEN)🚀 ./$(NAME)          created                                                                     \n$(END)"

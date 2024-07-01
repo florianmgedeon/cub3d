@@ -23,6 +23,7 @@
 # define ESC 53
 # define PI 3.14159265359
 
+
 # include "../library/libft/include/libft.h"
 # include "../library/get_next_line/include/get_next_line.h"
 
@@ -35,6 +36,7 @@
 # include <math.h> 		//math library
 # include <mlx.h> 		//MinilibX
 # include <stdbool.h> 	//bool
+# include <stdbool.h> 	//bool
 
 typedef struct s_color
 {
@@ -42,13 +44,6 @@ typedef struct s_color
 	int	g;
 	int	b;	
 }	t_color;
-
-typedef struct s_player
-{
-	double	x;
-	double	y;
-	double	angle;
-}	t_player;
 
 typedef struct s_map
 {
@@ -58,11 +53,23 @@ typedef struct s_map
 	char		*ea_path;
 	t_color		floor;
 	t_color		ceiling;
+	int			tile_size;
 	int			size_x;
 	int			size_y;
 	int			**data;
 	t_player	player;
 }	t_map;
+
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	dir_x;
+	float	dir_y;
+	float	plane_x;
+	float	plane_y;
+	//float	angle_rad;
+}	t_player;
 
 typedef struct s_data
 {
@@ -74,6 +81,12 @@ typedef struct s_data
 	void			*mlx;
 	void			*win;
 	t_map			map;
+	void			*test_player;//just for testing
+	void			*test_wall;//just for testing
+	int				test_height;//just for testing
+	int				test_width;//just for testing
+	int				**test_map;//just for testing
+	t_player		player;
 }	t_data;
 
 //check.c
@@ -109,5 +122,11 @@ int		**map_add_line(t_map *map, int *new_line);
 //print.c
 void	print_map(t_map map);
 void	print_line(int *line, int size);
+
+//window.c
+int		start_win(t_data *data);
+void	render(t_data *data);
+int		x_the_win(t_data *data);
+int		key_hook(int keycode, t_data *data);
 
 #endif
