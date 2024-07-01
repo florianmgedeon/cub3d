@@ -12,32 +12,41 @@
 
 #include "../include/cub3d.h"
 
-//changes window when keys are pressed - CHANGE TO DIR VECTOR MULTIPLICATION
-
+//changes window when keys are pressed
 int	key_hook(int keycode, t_data *data)
 {
     float old_dir_x = data->map.player.dir_x;
     float old_plane_x = data->map.player.plane_x;
-    // if (keycode == 119)//W
-    // {
-    //     data->player.x += cos(data->player.angle_rad) / 10;
-    //     data->player.y -= sin(data->player.angle_rad) / 10;
-    // }
-    // if (keycode == 97)//A
-    // {
-    //     data->player.x -= sin(data->player.angle_rad) / 10;
-    //     data->player.y -= cos(data->player.angle_rad) / 10;
-    // }
-    // if (keycode == 115)//S
-    // {
-    //     data->player.x -= cos(data->player.angle_rad) / 10;
-    //     data->player.y += sin(data->player.angle_rad) / 10;
-    // }
-    // if (keycode == 100)//D
-    // {
-    //     data->player.x += sin(data->player.angle_rad) / 10;
-    //     data->player.y += cos(data->player.angle_rad) / 10;
-    // }
+    float   move_speed = 0.1;
+
+    if (keycode == 119)//W
+    {
+        if (data->map.data[(int)data->map.player.y][(int)(data->map.player.x + data->map.player.dir_x * move_speed)] == 0)
+            data->map.player.x += data->map.player.dir_x * move_speed;
+        if (data->map.data[(int)(data->map.player.y + data->map.player.dir_y * move_speed)][(int)data->map.player.x] == 0)
+            data->map.player.y += data->map.player.dir_y * move_speed;
+    }
+    if (keycode == 97)//A
+    {
+        if (data->map.data[(int)data->map.player.y][(int)(data->map.player.x + data->map.player.dir_y * move_speed)] == 0)
+            data->map.player.x += data->map.player.dir_y * move_speed;
+        if (data->map.data[(int)(data->map.player.y - data->map.player.dir_x * move_speed)][(int)data->map.player.x] == 0)
+            data->map.player.y -= data->map.player.dir_x * move_speed;
+    }
+    if (keycode == 115)//S
+    {
+        if (data->map.data[(int)data->map.player.y][(int)(data->map.player.x - data->map.player.dir_x * move_speed)] == 0)
+            data->map.player.x -= data->map.player.dir_x * move_speed;
+        if (data->map.data[(int)(data->map.player.y - data->map.player.dir_y * move_speed)][(int)data->map.player.x] == 0)
+            data->map.player.y -= data->map.player.dir_y * move_speed;
+    }
+    if (keycode == 100)//D
+    {
+        if (data->map.data[(int)data->map.player.y][(int)(data->map.player.x - data->map.player.dir_y * move_speed)] == 0)
+            data->map.player.x -= data->map.player.dir_y * move_speed;
+        if (data->map.data[(int)(data->map.player.y + data->map.player.dir_x * move_speed)][(int)data->map.player.x] == 0)
+            data->map.player.y += data->map.player.dir_x * move_speed;
+    }
     if (keycode == 65361)//left arrow
     {
         data->map.player.dir_x = data->map.player.dir_x * cos(-0.1) - data->map.player.dir_y * sin(-0.1);

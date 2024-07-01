@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 		return (free_data(&data), 1);
 	if (!map_check(data.map))
 		return (free_data(&data), 1);
-	print_map(data.map);
+	//print_map(data.map);
 
 	//mlx
 	data.mlx = mlx_init();
