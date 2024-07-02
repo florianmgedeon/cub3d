@@ -98,7 +98,7 @@ bool	valid_map_check(t_map map)
 					|| map.data[y][x - 1] == -1 || map.data[y][x + 1] == -1)
 				{
 					write(2, "Error\nMap is not closed\n", 25);
-					return (true);
+					return (false);
 				}
 			}
 			x++;
