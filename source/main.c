@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:36:10 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/26 16:30:50 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:23:30 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	main(int argc, char **argv)
 		return (free_data(&data), 1);
 	//print_map(data.map);
 
-	//mlx
-	data.map.tile_size = 50;
+	data.map.tile_size = 50; //just for testing
 	data.mlx = mlx_init();
     if (!data.mlx)
 		return (1);
@@ -41,7 +40,6 @@ int	main(int argc, char **argv)
 	//second win
 	mlx_hook(data.win2, 17, 0, x_the_win, &data);
     mlx_hook(data.win2, 2, 1L << 0, key_hook, &data);
-	
 	
 	mlx_loop(data.mlx);
 	

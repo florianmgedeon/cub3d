@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 14:23:22 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:26:03 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGHT 800
 # define NBR_RAYS (SCREEN_WIDTH / 1)
-
+# define TEXTURE_SIZE 64
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
 
 # include "../library/libft/include/libft.h"
 # include "../library/get_next_line/include/get_next_line.h"
@@ -40,6 +44,7 @@
 # include <mlx.h> 		//MinilibX
 # include <stdbool.h> 	//bool
 # include <stdbool.h> 	//bool
+
 
 typedef struct s_color
 {
@@ -70,6 +75,7 @@ typedef struct s_map
 	int			size_x;
 	int			size_y;
 	int			**data;
+	int 		**textures;
 	t_player	player;
 }	t_map;
 
@@ -95,6 +101,7 @@ bool	map_check(t_map map);
 bool	null_check(t_map map);
 bool	color_check(t_map map);
 bool	valid_map_check(t_map map);
+bool	load_textures(t_data *data);
 
 //init.c
 void	init_data(t_data *data);

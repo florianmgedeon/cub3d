@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:08:44 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 14:22:47 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:21:49 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,25 @@ bool	valid_map_check(t_map map)
 			x++;
 		}
 		y++;
+	}
+	return (true);
+}
+
+//load textures
+bool	load_textures(t_data *data)
+{
+	data->map.textures = malloc(4 * sizeof(int *));
+	if (!data->map.textures)
+		return (false);
+	data->map.textures[NORTH] = mlx_xpm_file_to_image(data->mlx, data->map.no_path, &data->test_width, &data->test_height);
+	data->map.textures[SOUTH] = mlx_xpm_file_to_image(data->mlx, data->map.so_path, &data->test_width, &data->test_height);
+	data->map.textures[EAST] = mlx_xpm_file_to_image(data->mlx, data->map.ea_path, &data->test_width, &data->test_height);
+	data->map.textures[WEST] = mlx_xpm_file_to_image(data->mlx, data->map.we_path, &data->test_width, &data->test_height);
+	if (!data->map.textures[NORTH] || !data->map.textures[SOUTH]
+		|| !data->map.textures[EAST] || !data->map.textures[WEST])
+	{
+		write(2, "Error\nTexture loading failed\n", 29);
+		return (false);
 	}
 	return (true);
 }

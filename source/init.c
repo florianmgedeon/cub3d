@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:30:08 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 14:32:38 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:14:47 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_data(t_data *data)
 	data->map.size_x = 0;
 	data->map.size_y = 0;
 	data->map.data = NULL;
+	data->map.textures = NULL;
 	init_player(&data->map.player);
 	init_colors(&data->map);
 }
@@ -58,5 +59,13 @@ int	free_data(t_data *data)
 	free(data->map.so_path);
 	free(data->map.we_path);
 	free(data->map.ea_path);
+	if (data->map.textures)
+	{
+		mlx_destroy_image(data->mlx, data->map.textures[NORTH]);
+		mlx_destroy_image(data->mlx, data->map.textures[SOUTH]);
+		mlx_destroy_image(data->mlx, data->map.textures[EAST]);
+		mlx_destroy_image(data->mlx, data->map.textures[WEST]);
+	}
+	free(data->map.textures);
 	return (0);
 }
