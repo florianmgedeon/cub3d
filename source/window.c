@@ -74,11 +74,14 @@ int	x_the_win(t_data *data)
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_image(data->mlx, data->test_player);
     mlx_destroy_image(data->mlx, data->test_wall);
+	mlx_destroy_window(data->mlx, data->win2);
 	//more destroy here
 
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
     free_data(data);
+
+
 	exit(0);
 }
 
@@ -141,6 +144,12 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 	}
 
 }
+
+//draws the wall according to calc_ray function's i, drawStart and drawEnd, color
+// void put_wall(t_data *data, int x, int drawStart, int drawEnd, int color)
+// {
+
+// }
 
 //calculates the ray endpoints and the distance to the wall
 void calc_ray(t_data *data)
@@ -218,6 +227,25 @@ void calc_ray(t_data *data)
             put_ray(data, 16711680, data->map.player.x + perpWallDist * ray_dir_x, data->map.player.y + perpWallDist * ray_dir_y);
         else
             put_ray(data, 16711680, data->map.player.x + perpWallDist * ray_dir_x, data->map.player.y + perpWallDist * ray_dir_y);
+        
+        //calc height, draw start and draw end, color wall
+        // int h = 1;
+
+        // int lineHeight = (int)(h / perpWallDist);
+        // int drawStart = -lineHeight / 2 + h / 2;
+        // if(drawStart < 0) drawStart = 0;
+        // int drawEnd = lineHeight / 2 + h / 2;
+        // if(drawEnd >= h) drawEnd = h - 1;
+        
+        // int color_wall = 0;
+        // if (data->map.data[map_y][map_x] == 1)
+        //     color_wall = 16711680; // Red by default
+        // else
+        //     color_wall = 255; // Blue
+        // if(side == 1)
+        //     color_wall = color_wall / 2;
+        // put_wall(data, i, drawStart, drawEnd, color_wall);
+        
         i++;
     }
 }
@@ -241,5 +269,14 @@ int start_win(t_data *data)
 	data->test_wall = mlx_xpm_file_to_image(data->mlx, "./textures/test_wall.xpm",
 		&data->test_height, &data->test_width);
     
+	return (1);
+}
+
+//new window for 3D
+int start_win2(t_data *data)
+{
+	data->win2 = mlx_new_window(data->mlx, 1500, 800, "cub3D");
+	if (!data->win2)
+		return (0);
 	return (1);
 }

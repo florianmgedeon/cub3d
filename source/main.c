@@ -26,15 +26,23 @@ int	main(int argc, char **argv)
 	//print_map(data.map);
 
 	//mlx
+	data.map.tile_size = 50;
 	data.mlx = mlx_init();
     if (!data.mlx)
 		return (1);
-	data.map.tile_size = 50;
+
     if (!start_win(&data))
+        return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
+    if (!start_win2(&data))
         return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
     render(&data);
     mlx_hook(data.win, 17, 0, x_the_win, &data);
     mlx_hook(data.win, 2, 1L << 0, key_hook, &data);
+	//second win
+	mlx_hook(data.win2, 17, 0, x_the_win, &data);
+    mlx_hook(data.win2, 2, 1L << 0, key_hook, &data);
+	
+	
 	mlx_loop(data.mlx);
 	
 	return (free_data(&data), 0);

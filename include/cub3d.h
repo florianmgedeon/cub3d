@@ -79,6 +79,7 @@ typedef struct s_data
 	int				endian;
 	void			*mlx;
 	void			*win;
+	void			*win2;
 	t_map			map;
 	void			*test_player;//just for testing
 	void			*test_wall;//just for testing
@@ -124,6 +125,7 @@ void	print_line(int *line, int size);
 
 //window.c
 int		start_win(t_data *data);
+int		start_win2(t_data *data);
 void	render(t_data *data);
 int		x_the_win(t_data *data);
 int		key_hook(int keycode, t_data *data);
