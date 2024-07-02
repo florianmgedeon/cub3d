@@ -61,12 +61,14 @@ int	key_hook(int keycode, t_data *data)
         data->map.player.plane_x = data->map.player.plane_x * cos(0.1) - data->map.player.plane_y * sin(0.1);
         data->map.player.plane_y = old_plane_x * sin(0.1) + data->map.player.plane_y * cos(0.1);
     }
+    if (keycode == 65307)//esc
+        x_the_win(data);
     render(data);
     return (0);
 }
 
 
-//cleans up if window is closed
+//cleans up if window is closed with the top right X
 int	x_the_win(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
@@ -101,6 +103,7 @@ void	put_map(t_data *data)
 	}
 }
 
+//draws the ray according to the DDA algorithm endpoints
 void put_ray(t_data *data, int color, float end_x, float end_y)
 {
 	int x = data->map.player.x * data->map.tile_size;
@@ -139,6 +142,7 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 
 }
 
+//calculates the ray endpoints and the distance to the wall
 void calc_ray(t_data *data)
 {
     int i = 0;
