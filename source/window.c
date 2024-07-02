@@ -145,20 +145,38 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 
 }
 
+int colorToInt(t_color color)
+{
+    return (color.r << 16 | color.g << 8 | color.b);
+}
+
 //draws the wall according to calc_ray function's i, drawStart and drawEnd, color
 void put_wall(t_data *data, int i, int drawStart, int drawEnd, int color)
 {
     int col_width = SCREEN_WIDTH / NBR_RAYS;
     int colx = i * col_width;
     int j = 0;
+    int k = 0;
 
     while (colx < (i + 1) * col_width)
     {
         j = 0;
+        k = 0;
+        while (k < drawStart)
+        {
+            mlx_pixel_put(data->mlx, data->win2, colx, k, colorToInt(data->map.ceiling));
+            k++;
+        }
         while (drawStart + j < drawEnd)
         {
             mlx_pixel_put(data->mlx, data->win2, colx, drawStart + j, color);
             j++;
+        }
+        k = 0;
+        while (k + drawEnd < SCREEN_HEIGHT)
+        {
+            mlx_pixel_put(data->mlx, data->win2, colx, k + drawEnd, colorToInt(data->map.floor));
+            k++;
         }
         colx++;
     }
@@ -270,7 +288,6 @@ void calc_ray(t_data *data)
 void	render(t_data *data)
 {
 	mlx_clear_window(data->mlx, data->win);//just for testing
-    mlx_clear_window(data->mlx, data->win2);
 	put_map(data);//just for testing
 	calc_ray(data);
 }

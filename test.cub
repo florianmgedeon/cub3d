@@ -1,9 +1,9 @@
 NO ./path1
 WE ./path4
 EA ./path3
-   C     225 , 30, 1 
+   C     173,  216, 230
 
-  F   20,  158, 10
+  F   0, 100, 0
 
   SO ./pathX
 
