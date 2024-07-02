@@ -22,6 +22,9 @@
 # define D 2
 # define ESC 53
 # define PI 3.14159265359
+# define SCREEN_WIDTH 1500
+# define SCREEN_HEIGHT 800
+# define NBR_RAYS (SCREEN_WIDTH / 10)
 
 
 # include "../library/libft/include/libft.h"

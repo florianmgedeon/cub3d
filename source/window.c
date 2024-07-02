@@ -146,16 +146,29 @@ void put_ray(t_data *data, int color, float end_x, float end_y)
 }
 
 //draws the wall according to calc_ray function's i, drawStart and drawEnd, color
-// void put_wall(t_data *data, int x, int drawStart, int drawEnd, int color)
-// {
+void put_wall(t_data *data, int i, int drawStart, int drawEnd, int color)
+{
+    int col_width = SCREEN_WIDTH / NBR_RAYS;
+    int colx = i * col_width;
+    int j = 0;
 
-// }
+    while (colx < (i + 1) * col_width)
+    {
+        j = 0;
+        while (drawStart + j < drawEnd)
+        {
+            mlx_pixel_put(data->mlx, data->win2, colx, drawStart + j, color);
+            j++;
+        }
+        colx++;
+    }
+}
 
 //calculates the ray endpoints and the distance to the wall
 void calc_ray(t_data *data)
 {
     int i = 0;
-    int w = 120;
+    int w = NBR_RAYS;
     double camera_x;
     double ray_dir_x;
     double ray_dir_y;
@@ -219,7 +232,7 @@ void calc_ray(t_data *data)
                 hit = 1;
         }
         float perpWallDist;
-        if(side == 0) 
+        if(side == 0)
             perpWallDist = (side_dist_x - delta_dist_x);
         else          
             perpWallDist = (side_dist_y - delta_dist_y);
@@ -229,22 +242,25 @@ void calc_ray(t_data *data)
             put_ray(data, 16711680, data->map.player.x + perpWallDist * ray_dir_x, data->map.player.y + perpWallDist * ray_dir_y);
         
         //calc height, draw start and draw end, color wall
-        // int h = 1;
+        int h = SCREEN_HEIGHT;
 
-        // int lineHeight = (int)(h / perpWallDist);
-        // int drawStart = -lineHeight / 2 + h / 2;
-        // if(drawStart < 0) drawStart = 0;
-        // int drawEnd = lineHeight / 2 + h / 2;
-        // if(drawEnd >= h) drawEnd = h - 1;
+        int lineHeight = (int)(h / perpWallDist);
+        int drawStart = -lineHeight / 2 + h / 2;
+        if(drawStart < 0)
+            drawStart = 0;
+        int drawEnd = lineHeight / 2 + h / 2;
+        if(drawEnd >= h)
+            drawEnd = h - 1;
         
-        // int color_wall = 0;
-        // if (data->map.data[map_y][map_x] == 1)
-        //     color_wall = 16711680; // Red by default
-        // else
-        //     color_wall = 255; // Blue
-        // if(side == 1)
-        //     color_wall = color_wall / 2;
-        // put_wall(data, i, drawStart, drawEnd, color_wall);
+        int color_wall = 0;
+        if (data->map.data[map_y][map_x] == 1)
+            color_wall = 16711680; // Red by default
+        else
+            color_wall = 255; // Blue
+        if(side == 1)
+            color_wall = color_wall / 2;
+        //printf("i: %d, drawStart: %d, drawEnd: %d\n", i, drawStart, drawEnd);
+        put_wall(data, i, drawStart, drawEnd, color_wall);
         
         i++;
     }
@@ -254,6 +270,7 @@ void calc_ray(t_data *data)
 void	render(t_data *data)
 {
 	mlx_clear_window(data->mlx, data->win);//just for testing
+    mlx_clear_window(data->mlx, data->win2);
 	put_map(data);//just for testing
 	calc_ray(data);
 }
@@ -275,7 +292,7 @@ int start_win(t_data *data)
 //new window for 3D
 int start_win2(t_data *data)
 {
-	data->win2 = mlx_new_window(data->mlx, 1500, 800, "cub3D");
+	data->win2 = mlx_new_window(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	if (!data->win2)
 		return (0);
 	return (1);
