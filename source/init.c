@@ -59,12 +59,15 @@ int	free_data(t_data *data)
 	free(data->map.so_path);
 	free(data->map.we_path);
 	free(data->map.ea_path);
-	if (data->texture)
-	{
-		i = 0;
-		while (i < 4)
-			free(data->texture[i++]);
-		free(data->texture);
-	}
+	// if (data->texture)
+	// {
+	// 	i = 0;
+	// 	while (i < 4)
+	// 	{
+	// 		if (data->texture[i])
+	// 			free(data->texture[i++]);
+	// 	}
+	// 	free(data->texture);
+	// }
 	return (0);
 }

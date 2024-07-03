@@ -24,27 +24,22 @@ int	main(int argc, char **argv)
 	if (!map_check(data.map))
 		return (free_data(&data), 1);
 	//print_map(data.map);
-
-	//mlx
-	data.map.tile_size = 50;
+	data.map.tile_size = 50;//just for testing
 	data.mlx = mlx_init();
-    if (!data.mlx)
+	if (!data.mlx)
 		return (1);
-
-    if (!start_win(&data))
-        return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
-    if (!start_win2(&data))
-        return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
-    render(&data);
-    mlx_hook(data.win, 17, 0, x_the_win, &data);
-    mlx_hook(data.win, 2, 1L << 0, key_hook, &data);
-	//second win
+	if (!start_win(&data))
+		return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
+	if (!start_win2(&data))
+		return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
+	mlx_clear_window(data.mlx, data.win);// just for testing
+	put_map(&data);// just for testing
+	calc_ray(&data);
+	mlx_hook(data.win, 17, 0, x_the_win, &data);
+	mlx_hook(data.win, 2, 1L << 0, key_hook, &data);
 	mlx_hook(data.win2, 17, 0, x_the_win, &data);
-    mlx_hook(data.win2, 2, 1L << 0, key_hook, &data);
-	
-	
+	mlx_hook(data.win2, 2, 1L << 0, key_hook, &data);
 	mlx_loop(data.mlx);
-	
 	return (free_data(&data), 0);
 }
 
