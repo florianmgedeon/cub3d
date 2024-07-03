@@ -94,7 +94,9 @@ void	calculate_wall_properties(t_data *d, t_ray *vars)
 	vars->drawend = vars->lineheight / 2 + vars->h / 2;
 	vars->color_wall = 0;
 	if (vars->side == 0)
-		vars->x_of_tex = (d->map.player.y + vars->perpwalldist * vars->ray_dir_y);
+		vars->x_of_tex = (d->map.player.y + vars->perpwalldist
+				* vars->ray_dir_y);
 	else
-		vars->x_of_tex = (d->map.player.x + vars->perpwalldist * vars->ray_dir_x);
+		vars->x_of_tex = (d->map.player.x + vars->perpwalldist
+				* vars->ray_dir_x);
 }

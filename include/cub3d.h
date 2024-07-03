@@ -87,10 +87,10 @@ typedef struct s_data
 	void		*win2;
 	t_map		map;
 	int			**texture;
-	void		*test_player;//just for testing
-	void		*test_wall;//just for testing
-	int			test_height;//just for testing
-	int			test_width;//just for testing
+	void		*test_player;// just for testing
+	void		*test_wall;// just for testing
+	int			test_height;// just for testing
+	int			test_width;// just for testing
 }				t_data;
 
 typedef struct s_ray
@@ -120,6 +120,16 @@ typedef struct s_ray
 	float		x_of_tex;
 }				t_ray;
 
+typedef struct s_tex
+{
+	int			tex;
+	int			*texture;
+	void		*tex_ptr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_tex;
+
 // check.c
 bool			map_check(t_map map);
 bool			null_check(t_map map);
@@ -146,11 +156,13 @@ bool			parse_map_data(t_map *map, char *line);
 void			update_map_size(t_map *map, int x);
 
 // parse_utils.c
-void			skip_spaces(char *line, int *i);
-int				is_player(char c);
 bool			set_player(t_map *map, int x, char c);
 bool			arg_check(int argc, char **argv);
 int				**map_add_line(t_map *map, int *new_line);
+
+// parse_utils2.c
+void			skip_spaces(char *line, int *i);
+int				is_player(char c);
 
 // print.c
 void			print_map(t_map map);
@@ -171,12 +183,15 @@ int				start_win(t_data *data);
 int				start_win2(t_data *data);
 int				colortoint(t_color color);
 
-//calc_ray_utils.c
+// calc_ray_utils.c
 void			init_ray_vars(t_data *data, t_ray *vars);
 void			calc_step_side(t_ray *vars, t_data *data);
 void			calculate_hit(t_ray *vars, t_data *data);
 void			perpdist_and_put_ray(t_data *data, t_ray *vars);
 void			calculate_wall_properties(t_data *data, t_ray *vars);
+
+//put_wall_utils.c
+void			draw_texture(t_data *data, t_ray *vars, int colx);
 
 // justfortesting.c REMOVE BEFORE SUBMISSION
 void			put_map(t_data *data);

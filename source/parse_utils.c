@@ -12,19 +12,6 @@
 
 #include "../include/cub3d.h"
 
-//skip spaces in a string and update the i
-void	skip_spaces(char *line, int *i)
-{
-	while (line[*i] == ' ')
-		(*i)++;
-}
-
-//check if a char is a player
-int	is_player(char c)
-{
-	return (c == 'N' || c == 'S' || c == 'W' || c == 'E');
-}
-
 //set the player position and angle
 //error if multiple players
 bool	set_player(t_map *map, int x, char c)
@@ -32,7 +19,9 @@ bool	set_player(t_map *map, int x, char c)
 	t_player	*player;
 
 	player = &map->player;
-	if (player->x != -1 || player->y != -1 || player->dir_x != -2 || player->dir_y != -2 || player->plane_x != -2 || player->plane_y != -2)	
+	if (player->x != -1 || player->y != -1 || player->dir_x != -2
+		|| player->dir_y != -2 || player->plane_x != -2
+		|| player->plane_y != -2)
 		return (write(2, "Error\nMultiple players in the map\n", 35), false);
 	player->x = x;
 	player->y = map->size_y;

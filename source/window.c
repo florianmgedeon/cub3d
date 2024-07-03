@@ -37,48 +37,27 @@ int	key_hook(int keycode, t_data *data)
 }
 
 // draws the wall
-void	put_wall(t_data *data, int i, int drawstart, int drawend,
-		float x_of_tex, int tex)
+void	put_wall(t_data *data, t_ray *vars)
 {
-	int	col_width;
 	int	colx;
 	int	y;
 
-	col_width = SCREEN_WIDTH / NBR_RAYS;
-	colx = i * col_width;
+	colx = vars->i * (SCREEN_WIDTH / NBR_RAYS);
 	y = 0;
-
-	while (colx < (i + 1) * col_width)
+	while (colx < (vars->i + 1) * (SCREEN_WIDTH / NBR_RAYS))
 	{
 		y = 0;
-		while (y < drawstart)
+		while (y < vars->drawstart)
 		{
 			mlx_pixel_put(data->mlx, data->win2, colx, y,
 				colortoint(data->map.ceiling));
 			y++;
 		}
+		draw_texture(data, vars, colx);
 		y = 0;
-		while (drawstart + y < drawend)
+		while (y + vars->drawend < SCREEN_HEIGHT)
 		{
-			if (drawstart + y < 0)
-			{
-				y++;
-				continue;
-			}
-			if (drawstart + y >= SCREEN_HEIGHT)
-				break;
-			int x = (int)((x_of_tex - (int)x_of_tex) * TEXTURE_SIZE);
-			if (tex == SOUTH || tex == WEST)
-				x = TEXTURE_SIZE - x - 1;
-			int tex_y = (y * TEXTURE_SIZE) / (drawend - drawstart);
-			int color = data->texture[tex][x + tex_y * TEXTURE_SIZE];
-			mlx_pixel_put(data->mlx, data->win2, colx, drawstart + y, color);
-			y++;
-		}
-		y = 0;
-		while (y + drawend < SCREEN_HEIGHT)
-		{
-			mlx_pixel_put(data->mlx, data->win2, colx, y + drawend,
+			mlx_pixel_put(data->mlx, data->win2, colx, y + vars->drawend,
 				colortoint(data->map.floor));
 			y++;
 		}
@@ -108,6 +87,7 @@ int	what_texture(int side, double ray_dir_x, double ray_dir_y)
 void	calc_ray(t_data *data)
 {
 	t_ray	vars;
+	float	x_of_tex;
 
 	vars.i = 0;
 	vars.w = NBR_RAYS;
@@ -119,12 +99,14 @@ void	calc_ray(t_data *data)
 		perpdist_and_put_ray(data, &vars);
 		vars.tex = what_texture(vars.side, vars.ray_dir_x, vars.ray_dir_y);
 		calculate_wall_properties(data, &vars);
-		float x_of_tex = 0;
+		x_of_tex = 0;
 		if (vars.side == 0)
-			x_of_tex = (data->map.player.y + vars.perpwalldist * vars.ray_dir_y);
+			x_of_tex = (data->map.player.y + vars.perpwalldist
+					* vars.ray_dir_y);
 		else
-			x_of_tex = (data->map.player.x + vars.perpwalldist * vars.ray_dir_x);
-		put_wall(data, vars.i, vars.drawstart, vars.drawend, vars.x_of_tex, vars.tex);
+			x_of_tex = (data->map.player.x + vars.perpwalldist
+					* vars.ray_dir_x);
+		put_wall(data, &vars);
 		vars.i++;
 	}
 }

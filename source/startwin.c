@@ -28,18 +28,17 @@ int	start_win(t_data *data)
 	return (1);
 }
 
-int *save_texture(t_data *data, char *path)
+int	*save_texture(t_data *data, char *path)
 {
-	int tex;
-	int *texture;
-	void *tex_ptr;
-	int bits_per_pixel, line_length, endian;
+	t_tex	tex_info;
 
-	tex = TEXTURE_SIZE;
-	tex_ptr = mlx_xpm_file_to_image(data->mlx, path, &tex, &tex);
-	texture = (int *)mlx_get_data_addr(tex_ptr, &bits_per_pixel, &line_length, &endian);
-	//mlx_destroy_image(data->mlx, tex_ptr);
-	return (texture);
+	tex_info.tex = TEXTURE_SIZE;
+	tex_info.tex_ptr = mlx_xpm_file_to_image(data->mlx, path,
+			&tex_info.tex, &tex_info.tex);
+	tex_info.texture = (int *)mlx_get_data_addr(tex_info.tex_ptr,
+			&tex_info.bits_per_pixel,
+			&tex_info.line_length, &tex_info.endian);
+	return (tex_info.texture);
 }
 
 // new window for 3D - malloc NEEDS A FREE LATER

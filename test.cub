@@ -1,9 +1,9 @@
-NO ./textures/blue_stone.xpm
-WE ./textures/color_stone.xpm
+NO ./textures/color_stone.xpm
+WE ./textures/blue_stone.xpm
 EA ./textures/grey_stone.xpm
-   C     173,  216, 230
+   C     49, 49, 49
 
-  F   0, 100, 0
+   F     118, 118, 118
 
   SO ./textures/purple_stone.xpm
        
