@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 14:23:22 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 11:44:20 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGHT 800
 # define NBR_RAYS (SCREEN_WIDTH / 1)
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
+# define TEXTURE_SIZE 64
 
 
 # include "../library/libft/include/libft.h"
@@ -84,6 +89,7 @@ typedef struct s_data
 	void			*win;
 	void			*win2;
 	t_map			map;
+	int 			**texture;
 	void			*test_player;//just for testing
 	void			*test_wall;//just for testing
 	int				test_height;//just for testing
