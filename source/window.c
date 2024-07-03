@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:38:29 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 17:21:34 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 20:13:06 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	key_hook(int keycode, t_data *data)
 
 	old_dir_x = data->map.player.dir_x;
 	old_plane_x = data->map.player.plane_x;
-	move_speed = 0.1;
+	move_speed = 0.111111;
 	if (keycode == 119 || keycode == 115)
 		move_ws(keycode, data, move_speed);
 	else if (keycode == 97 || keycode == 100)

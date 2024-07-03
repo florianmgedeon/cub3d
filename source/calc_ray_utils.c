@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:31:26 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 17:01:22 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 20:06:07 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	perpdist_and_put_ray(t_data *data, t_ray *vars)
 void	calculate_wall_properties(t_data *d, t_ray *vars)
 {
 	vars->h = SCREEN_HEIGHT;
+	if (vars->perpwalldist < 0.01)
+		vars->perpwalldist = 0.01;
 	vars->lineheight = (int)(vars->h / vars->perpwalldist);
 	vars->drawstart = -vars->lineheight / 2 + vars->h / 2;
 	vars->drawend = vars->lineheight / 2 + vars->h / 2;
