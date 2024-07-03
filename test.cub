@@ -1,11 +1,11 @@
-NO ./textures/north.xpm
-WE ./textures/west.xpm
-EA ./textures/east.xpm
+NO ./textures/blue_stone.xpm
+WE ./textures/color_stone.xpm
+EA ./textures/grey_stone.xpm
    C     173,  216, 230
 
   F   0, 100, 0
 
-  SO ./textures/south.xpm
+  SO ./textures/purple_stone.xpm
        
 11111111111111111
 10100001000000001

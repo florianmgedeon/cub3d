@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:38:29 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 12:26:50 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 17:21:34 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	key_hook(int keycode, t_data *data)
 }
 
 // draws the wall
-void	put_wall(t_data *data, int i, int drawstart, int drawend, int color,
-		int x_of_tex, int tex)
+void	put_wall(t_data *data, int i, int drawstart, int drawend,
+		float x_of_tex, int tex)
 {
 	int	col_width;
 	int	colx;
@@ -47,8 +47,7 @@ void	put_wall(t_data *data, int i, int drawstart, int drawend, int color,
 	col_width = SCREEN_WIDTH / NBR_RAYS;
 	colx = i * col_width;
 	y = 0;
-	(void)x_of_tex;
-	(void)tex;
+
 	while (colx < (i + 1) * col_width)
 	{
 		y = 0;
@@ -61,6 +60,18 @@ void	put_wall(t_data *data, int i, int drawstart, int drawend, int color,
 		y = 0;
 		while (drawstart + y < drawend)
 		{
+			if (drawstart + y < 0)
+			{
+				y++;
+				continue;
+			}
+			if (drawstart + y >= SCREEN_HEIGHT)
+				break;
+			int x = (int)((x_of_tex - (int)x_of_tex) * TEXTURE_SIZE);
+			if (tex == SOUTH || tex == WEST)
+				x = TEXTURE_SIZE - x - 1;
+			int tex_y = (y * TEXTURE_SIZE) / (drawend - drawstart);
+			int color = data->texture[tex][x + tex_y * TEXTURE_SIZE];
 			mlx_pixel_put(data->mlx, data->win2, colx, drawstart + y, color);
 			y++;
 		}
@@ -107,12 +118,13 @@ void	calc_ray(t_data *data)
 		calculate_hit(&vars, data);
 		perpdist_and_put_ray(data, &vars);
 		vars.tex = what_texture(vars.side, vars.ray_dir_x, vars.ray_dir_y);
-		calculate_wall_properties(&vars);
-		vars.x_of_tex = (data->map.player.x + vars.perpwalldist
-				* vars.ray_dir_x) - (int)(data->map.player.x
-				+ vars.perpwalldist * vars.ray_dir_x);
-		put_wall(data, vars.i, vars.drawstart, vars.drawend, vars.color_wall,
-			vars.x_of_tex, vars.tex);
+		calculate_wall_properties(data, &vars);
+		float x_of_tex = 0;
+		if (vars.side == 0)
+			x_of_tex = (data->map.player.y + vars.perpwalldist * vars.ray_dir_y);
+		else
+			x_of_tex = (data->map.player.x + vars.perpwalldist * vars.ray_dir_x);
+		put_wall(data, vars.i, vars.drawstart, vars.drawend, vars.x_of_tex, vars.tex);
 		vars.i++;
 	}
 }

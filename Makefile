@@ -6,7 +6,7 @@
 #    By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/18 14:59:11 by jkoupy            #+#    #+#              #
-#    Updated: 2024/06/26 15:23:21 by jkoupy           ###   ########.fr        #
+#    Updated: 2024/07/03 16:58:35 by jkoupy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,6 @@ object/%.o: source/%.c
 
 $(NAME): $(LIBFT) $(GETNEXTLINE) $(OBJS) 
 	@$(CC) $(OBJS) $(MLXFLAGS) $(CFLAGS) $(LIBFT) $(GETNEXTLINE) -o $(NAME) $(RFLAGS)
-	@$(RM) heredocs
-	@mkdir heredocs
 	@printf "\r$(GREEN)🚀 ./$(NAME)          created                                                                     \n$(END)"
 
 $(LIBFT):

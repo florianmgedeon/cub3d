@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc_ray_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgedeon <fgedeon@student.42vienna.com>     #+#  +:+       +#+        */
+/*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-03 13:31:26 by fgedeon           #+#    #+#             */
-/*   Updated: 2024-07-03 13:31:26 by fgedeon          ###   ########.fr       */
+/*   Created: 2024/07/03 13:31:26 by fgedeon           #+#    #+#             */
+/*   Updated: 2024/07/03 17:01:22 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,15 @@ void	perpdist_and_put_ray(t_data *data, t_ray *vars)
 		* vars->ray_dir_y);
 }
 
-void	calculate_wall_properties(t_ray *vars)
+void	calculate_wall_properties(t_data *d, t_ray *vars)
 {
 	vars->h = SCREEN_HEIGHT;
 	vars->lineheight = (int)(vars->h / vars->perpwalldist);
 	vars->drawstart = -vars->lineheight / 2 + vars->h / 2;
-	if (vars->drawstart < 0)
-		vars->drawstart = 0;
 	vars->drawend = vars->lineheight / 2 + vars->h / 2;
-	if (vars->drawend >= vars->h)
-		vars->drawend = vars->h - 1;
 	vars->color_wall = 0;
-	if (vars->tex == NORTH)
-		vars->color_wall = 16711680;
-	else if (vars->tex == SOUTH)
-		vars->color_wall = 65280;
-	else if (vars->tex == WEST)
-		vars->color_wall = 255;
-	else if (vars->tex == EAST)
-		vars->color_wall = 16776960;
+	if (vars->side == 0)
+		vars->x_of_tex = (d->map.player.y + vars->perpwalldist * vars->ray_dir_y);
+	else
+		vars->x_of_tex = (d->map.player.x + vars->perpwalldist * vars->ray_dir_x);
 }

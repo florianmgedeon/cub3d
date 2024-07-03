@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   startwin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgedeon <fgedeon@student.42vienna.com>     #+#  +:+       +#+        */
+/*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-03 13:12:25 by fgedeon           #+#    #+#             */
-/*   Updated: 2024-07-03 13:12:25 by fgedeon          ###   ########.fr       */
+/*   Created: 2024/07/03 13:12:25 by fgedeon           #+#    #+#             */
+/*   Updated: 2024/07/03 17:06:54 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ int	start_win(t_data *data)
 	return (1);
 }
 
-int	*save_texture(t_data *data, char *path)
+int *save_texture(t_data *data, char *path)
 {
-	int		tex;
-	int		*texture;
-	void	*tex_ptr;
+	int tex;
+	int *texture;
+	void *tex_ptr;
+	int bits_per_pixel, line_length, endian;
 
 	tex = TEXTURE_SIZE;
 	tex_ptr = mlx_xpm_file_to_image(data->mlx, path, &tex, &tex);
-	texture = (int *)mlx_get_data_addr(tex_ptr, &tex, &tex, &tex);
+	texture = (int *)mlx_get_data_addr(tex_ptr, &bits_per_pixel, &line_length, &endian);
+	//mlx_destroy_image(data->mlx, tex_ptr);
 	return (texture);
 }
 

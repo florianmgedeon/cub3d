@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/03 11:44:20 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 17:17:18 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_ray
 	int			drawstart;
 	int			drawend;
 	int			color_wall;
-	int			x_of_tex;
+	float		x_of_tex;
 }				t_ray;
 
 // check.c
@@ -176,7 +176,7 @@ void			init_ray_vars(t_data *data, t_ray *vars);
 void			calc_step_side(t_ray *vars, t_data *data);
 void			calculate_hit(t_ray *vars, t_data *data);
 void			perpdist_and_put_ray(t_data *data, t_ray *vars);
-void			calculate_wall_properties(t_ray *vars);
+void			calculate_wall_properties(t_data *data, t_ray *vars);
 
 // justfortesting.c REMOVE BEFORE SUBMISSION
 void			put_map(t_data *data);
