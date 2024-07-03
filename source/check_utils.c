@@ -1,0 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 20:32:22 by jkoupy            #+#    #+#             */
+/*   Updated: 2024/07/03 20:33:56 by jkoupy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/cub3d.h"
+
+bool	texture_check(t_map map)
+{
+	if (!check_path(map.no_path))
+		return (false);
+	if (!check_path(map.so_path))
+		return (false);
+	if (!check_path(map.we_path))
+		return (false);
+	if (!check_path(map.ea_path))
+		return (false);
+	return (true);
+}
+
+bool	check_path(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
+		write(2, "Error\nTexture path is incorrect\n", 32);
+		return (false);
+	}
+	close(fd);
+	return (true);
+}

@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:30:08 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/02 18:11:48 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 20:29:24 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ int	free_data(t_data *data)
 	free(data->map.so_path);
 	free(data->map.we_path);
 	free(data->map.ea_path);
-	// if (data->texture)
-	// {
-	// 	i = 0;
-	// 	while (i < 4)
-	// 	{
-	// 		if (data->texture[i])
-	// 			free(data->texture[i++]);
-	// 	}
-	// 	free(data->texture);
-	// }
+	if (data->texture)
+	{
+		i = 0;
+		while (i < 4)
+		{
+			if (data->texture[i])
+				free(data->texture[i++]);
+		}
+		free(data->texture);
+	}
 	return (0);
 }

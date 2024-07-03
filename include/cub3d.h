@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/03 20:03:28 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 20:54:02 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ bool			map_check(t_map map);
 bool			null_check(t_map map);
 bool			color_check(t_map map);
 bool			valid_map_check(t_map map);
+
+// check_utils.c
+bool			texture_check(t_map map);
+bool			check_path(char *path);
 
 // init.c
 void			init_data(t_data *data);

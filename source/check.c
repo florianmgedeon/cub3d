@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:08:44 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 14:22:47 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 20:32:14 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ bool	map_check(t_map map)
 	if (!color_check(map))
 		return (false);
 	if (!valid_map_check(map))
+		return (false);
+	if (!texture_check(map))
 		return (false);
 	return (true);
 }

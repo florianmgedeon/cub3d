@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:12:25 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 17:06:54 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/03 20:27:25 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,25 @@ int	start_win(t_data *data)
 int	*save_texture(t_data *data, char *path)
 {
 	t_tex	tex_info;
+	int		*temp;
+	int 	i;
 
 	tex_info.tex = TEXTURE_SIZE;
 	tex_info.tex_ptr = mlx_xpm_file_to_image(data->mlx, path,
 			&tex_info.tex, &tex_info.tex);
-	tex_info.texture = (int *)mlx_get_data_addr(tex_info.tex_ptr,
+	temp = (int *)mlx_get_data_addr(tex_info.tex_ptr,
 			&tex_info.bits_per_pixel,
 			&tex_info.line_length, &tex_info.endian);
+	tex_info.texture = malloc(sizeof(int) * tex_info.tex * tex_info.tex);
+	if (!tex_info.texture)
+		return (0);
+	i = 0;
+	while (i < tex_info.tex * tex_info.tex)
+	{
+		tex_info.texture[i] = temp[i];
+		i++;
+	}
+	mlx_destroy_image(data->mlx, tex_info.tex_ptr);	
 	return (tex_info.texture);
 }
 
