@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:36:10 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 16:16:02 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:03:03 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ bool	parse(t_data *data, char *path)
 	char	*line;
 	int		ret;
 
+	line = NULL;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		perror("Error\nOpen");
-		return (0);
-	}
+		return (perror("Error\nOpen"), 0);
 	ret = get_next_line(fd, &line);
 	while (ret != 0 && line)
 	{
@@ -64,9 +62,6 @@ bool	parse(t_data *data, char *path)
 		ret = get_next_line(fd, &line);
 	}
 	if (close(fd) == -1)
-	{
-		perror("Error\nClose");
-		return (0);
-	}
+		return (perror("Error\nClose"), 0);
 	return (1);
 }

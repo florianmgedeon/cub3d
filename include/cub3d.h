@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/03 20:54:02 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:34:51 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define EAST 2
 # define WEST 3
 # define TEXTURE_SIZE 64
+# define ROTATION_SPEED (PI / 30)
 
 # include "../library/get_next_line/include/get_next_line.h"
 # include "../library/libft/include/libft.h"

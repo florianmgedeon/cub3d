@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:23:55 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 20:00:21 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:32:17 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	rota(int keycode, t_data *d, float o_dir_x, float o_pl_x)
 	float	angle;
 
 	if (keycode == 65361)
-		angle = -(PI / 16);
+		angle = -ROTATION_SPEED;
 	else
-		angle = PI / 16;
+		angle = ROTATION_SPEED;
 	d->map.player.dir_x = d->map.player.dir_x * cos(angle) - d->map.player.dir_y
 		* sin(angle);
 	d->map.player.dir_y = o_dir_x * sin(angle) + d->map.player.dir_y

@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:41:30 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/19 10:00:54 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:24:50 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <unistd.h>
 //malloc, free
 # include <stdlib.h>
+//bool
+# include <stdbool.h>
 
 # ifndef T_LIST
 #  define T_LIST
@@ -37,12 +39,12 @@ typedef struct s_list
 void	free_line(t_list **llist);
 char	*read_gnl_line(t_list *llist);
 int		line_ends(char *line);
-void	save_line(t_list **llist, int fd);
+bool	save_line(t_list **llist, int fd);
 int		get_next_line(int fd, char **line);
 
 void	free_list(t_list **llist, char *new_content);
 int		line_length(t_list *llist);
-void	ft_lstadd_new(t_list **lst, char *new_content);
+bool	ft_lstadd_new(t_list **lst, char *new_content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *content);
 

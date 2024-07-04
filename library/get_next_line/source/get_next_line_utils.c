@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:41:36 by jkoupy            #+#    #+#             */
-/*   Updated: 2023/12/17 13:27:58 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:00:40 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,22 @@ int	line_length(t_list *llist)
 	return (len);
 }
 
-void	ft_lstadd_new(t_list **lst, char *new_content)
+bool	ft_lstadd_new(t_list **lst, char *new_content)
 {
 	t_list	*temp;
 	t_list	*new;
 
 	new = ft_lstnew(new_content);
+	if (!new)
+		return (false);
 	if (!*lst && new)
 	{
 		*lst = new;
-		return ;
+		return (true);
 	}
 	temp = ft_lstlast(*lst);
 	temp->next = new;
+	return (true);
 }
 
 t_list	*ft_lstlast(t_list *lst)
