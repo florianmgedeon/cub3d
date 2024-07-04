@@ -13,7 +13,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-// keys
 # define LEFT 123
 # define RIGHT 124
 # define W 13
@@ -68,7 +67,6 @@ typedef struct s_map
 	char		*ea_path;
 	t_color		floor;
 	t_color		ceiling;
-	int			tile_size; // fust for testing
 	int			size_x;
 	int			size_y;
 	int			**data;
@@ -87,10 +85,6 @@ typedef struct s_data
 	void		*win2;
 	t_map		map;
 	int			**texture;
-	void		*test_player;// just for testing
-	void		*test_wall;// just for testing
-	int			test_height;// just for testing
-	int			test_width;// just for testing
 }				t_data;
 
 typedef struct s_ray
@@ -168,10 +162,6 @@ int				**map_add_line(t_map *map, int *new_line);
 void			skip_spaces(char *line, int *i);
 int				is_player(char c);
 
-// print.c
-void			print_map(t_map map);
-void			print_line(int *line, int size);
-
 // window.c
 int				key_hook(int keycode, t_data *data);
 void			calc_ray(t_data *data);
@@ -183,7 +173,6 @@ void			rota(int keycode, t_data *d, float o_dir_x, float o_pl_x);
 int				x_the_win(t_data *data);
 
 // startwin.c
-int				start_win(t_data *data);
 int				start_win2(t_data *data);
 int				colortoint(t_color color);
 
@@ -191,14 +180,10 @@ int				colortoint(t_color color);
 void			init_ray_vars(t_data *data, t_ray *vars);
 void			calc_step_side(t_ray *vars, t_data *data);
 void			calculate_hit(t_ray *vars, t_data *data);
-void			perpdist_and_put_ray(t_data *data, t_ray *vars);
+void			calc_perpdist(t_ray *vars);
 void			calculate_wall_properties(t_data *data, t_ray *vars);
 
 //put_wall_utils.c
 void			draw_texture(t_data *data, t_ray *vars, int colx);
-
-// justfortesting.c REMOVE BEFORE SUBMISSION
-void			put_map(t_data *data);
-void			put_ray(t_data *data, int color, float end_x, float end_y);
 
 #endif

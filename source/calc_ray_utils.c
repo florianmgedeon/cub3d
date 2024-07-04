@@ -75,15 +75,12 @@ void	calculate_hit(t_ray *vars, t_data *data)
 	}
 }
 
-void	perpdist_and_put_ray(t_data *data, t_ray *vars)
+void	calc_perpdist(t_ray *vars)
 {
 	if (vars->side == 0)
 		vars->perpwalldist = (vars->side_dist_x - vars->delta_dist_x);
 	else
 		vars->perpwalldist = (vars->side_dist_y - vars->delta_dist_y);
-	put_ray(data, 16711680, data->map.player.x + vars->perpwalldist
-		* vars->ray_dir_x, data->map.player.y + vars->perpwalldist
-		* vars->ray_dir_y);
 }
 
 void	calculate_wall_properties(t_data *d, t_ray *vars)

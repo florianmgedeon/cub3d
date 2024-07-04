@@ -30,8 +30,6 @@ int	key_hook(int keycode, t_data *data)
 		rota(keycode, data, old_dir_x, old_plane_x);
 	if (keycode == 65307)
 		x_the_win(data);
-	mlx_clear_window(data->mlx, data->win); // just for testing
-	put_map(data);                          // just for testing
 	calc_ray(data);
 	return (0);
 }
@@ -96,7 +94,7 @@ void	calc_ray(t_data *data)
 		init_ray_vars(data, &vars);
 		calc_step_side(&vars, data);
 		calculate_hit(&vars, data);
-		perpdist_and_put_ray(data, &vars);
+		calc_perpdist(&vars);
 		vars.tex = what_texture(vars.side, vars.ray_dir_x, vars.ray_dir_y);
 		calculate_wall_properties(data, &vars);
 		x_of_tex = 0;

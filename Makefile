@@ -33,7 +33,7 @@ RM = rm -rf
 LIBFT =	library/libft/libft.a
 GETNEXTLINE = 	library/get_next_line/getnextline.a
 
-SRCS =	main.c parse.c parse_utils.c parse_utils2.c init.c print.c check.c window.c keyhook.c startwin.c calc_ray_utils.c put_wall_utils.c justfortesting.c check_utils.c
+SRCS =	main.c parse.c parse_utils.c parse_utils2.c init.c check.c window.c keyhook.c startwin.c calc_ray_utils.c put_wall_utils.c check_utils.c
 OBJ_DIR = object/
 OBJS =  $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 DEPS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.d))

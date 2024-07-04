@@ -23,24 +23,17 @@ int	main(int argc, char **argv)
 		return (free_data(&data), 1);
 	if (!map_check(data.map))
 		return (free_data(&data), 1);
-	//print_map(data.map);
-	data.map.tile_size = 50;//just for testing
 	data.mlx = mlx_init();
 	if (!data.mlx)
-		return (1);
-	if (!start_win(&data))
-		return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
+		return (free_data(&data), 1);
 	if (!start_win2(&data))
-		return (mlx_destroy_display(data.mlx), free(data.mlx), 1);
-	mlx_clear_window(data.mlx, data.win);// just for testing
-	put_map(&data);// just for testing
+		return (free_data(&data), mlx_destroy_display(data.mlx),
+			free(data.mlx), 1);
 	calc_ray(&data);
-	mlx_hook(data.win, 17, 0, x_the_win, &data);
-	mlx_hook(data.win, 2, 1L << 0, key_hook, &data);
 	mlx_hook(data.win2, 17, 0, x_the_win, &data);
 	mlx_hook(data.win2, 2, 1L << 0, key_hook, &data);
 	mlx_loop(data.mlx);
-	return (free_data(&data), 0);
+	return (0);
 }
 
 //main parsing function

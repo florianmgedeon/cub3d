@@ -61,7 +61,7 @@ void	rota(int keycode, t_data *d, float o_dir_x, float o_pl_x)
 	float	angle;
 
 	if (keycode == 65361)
-		angle = - PI / 16;
+		angle = -(PI / 16);
 	else
 		angle = PI / 16;
 	d->map.player.dir_x = d->map.player.dir_x * cos(angle) - d->map.player.dir_y
@@ -77,9 +77,6 @@ void	rota(int keycode, t_data *d, float o_dir_x, float o_pl_x)
 // cleans up if window is closed with X/esc (NEED MORE IMG DESTROY HERE)
 int	x_the_win(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_image(data->mlx, data->test_player);
-	mlx_destroy_image(data->mlx, data->test_wall);
 	mlx_destroy_window(data->mlx, data->win2);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);

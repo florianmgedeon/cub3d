@@ -12,27 +12,11 @@
 
 #include "../include/cub3d.h"
 
-// creates the window & loads files to images
-int	start_win(t_data *data)
-{
-	data->win = mlx_new_window(data->mlx, data->map.size_x
-			* data->map.tile_size, data->map.size_y * data->map.tile_size,
-			"cub3D");
-	if (!data->win)
-		return (0);
-	data->test_player = mlx_xpm_file_to_image(data->mlx,
-			"./textures/test_player.xpm", &data->test_height,
-			&data->test_width);
-	data->test_wall = mlx_xpm_file_to_image(data->mlx,
-			"./textures/test_wall.xpm", &data->test_height, &data->test_width);
-	return (1);
-}
-
 int	*save_texture(t_data *data, char *path)
 {
 	t_tex	tex_info;
 	int		*temp;
-	int 	i;
+	int		i;
 
 	tex_info.tex = TEXTURE_SIZE;
 	tex_info.tex_ptr = mlx_xpm_file_to_image(data->mlx, path,
@@ -49,7 +33,7 @@ int	*save_texture(t_data *data, char *path)
 		tex_info.texture[i] = temp[i];
 		i++;
 	}
-	mlx_destroy_image(data->mlx, tex_info.tex_ptr);	
+	mlx_destroy_image(data->mlx, tex_info.tex_ptr);
 	return (tex_info.texture);
 }
 
