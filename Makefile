@@ -21,7 +21,7 @@ WHITE = \033[38;5;231;1m
 BROWN = \033[38;5;137;1m
 END = \033[0m
 
-NAME = cub3d
+NAME = cub3D
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g

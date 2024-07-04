@@ -107,9 +107,8 @@ bool	parse_map_data(t_map *map, char *line)
 			new_line[i++] = -1;
 		else if (line[i] == '1')
 			new_line[i++] = 1;
-		else if (line[i] == '0')
-			new_line[i++] = 0;
-		else if (is_player(line[i]) && set_player(map, i, line[i]))
+		else if (line[i] == '0' || (is_player(line[i])
+				&& set_player(map, i, line[i])))
 			new_line[i++] = 0;
 		else
 			return (free(new_line), 0);

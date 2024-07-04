@@ -29,7 +29,7 @@
 # define EAST 2
 # define WEST 3
 # define TEXTURE_SIZE 64
-# define ROTATION_SPEED (PI / 30)
+# define ROTATION_SPEED 0.10471975512
 
 # include "../library/get_next_line/include/get_next_line.h"
 # include "../library/libft/include/libft.h"
