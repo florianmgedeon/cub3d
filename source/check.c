@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:08:44 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 21:38:25 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:58:33 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,12 @@ bool	is_closed(t_map map, int x, int y)
 {
 	if (x == 0 || y == 0 || x == map.size_x - 1 || y == map.size_y - 1)
 		return (false);
-	//x+1
 	if (x + 1 > row_length(map.data[y]) || map.data[y][x + 1] < 0)
 		return (false);
-	//x-1
 	if (x - 1 < 0 || map.data[y][x - 1] < 0)
 		return (false);
-	//y+1
 	if (row_length(map.data[y + 1]) < x || map.data[y + 1][x] < 0)
 		return (false);
-	//y-1
 	if (row_length(map.data[y - 1]) < x || map.data[y - 1][x] < 0)
 		return (false);
 	return (true);

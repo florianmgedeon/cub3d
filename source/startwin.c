@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:12:25 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 20:27:25 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:58:30 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	*save_texture(t_data *data, char *path)
 
 // new window for 3D - malloc NEEDS A FREE LATER
 //save texture file to image then image to address function
-int	start_win2(t_data *data)
+int	start_win(t_data *data)
 {
 	data->win2 = mlx_new_window(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cub3D");
@@ -60,9 +60,4 @@ int	start_win2(t_data *data)
 		|| !data->texture[EAST])
 		return (0);
 	return (1);
-}
-
-int	colortoint(t_color color)
-{
-	return (color.r << 16 | color.g << 8 | color.b);
 }

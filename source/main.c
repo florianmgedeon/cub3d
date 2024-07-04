@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:36:10 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 21:26:17 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:56:32 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	data.mlx = mlx_init();
 	if (!data.mlx)
 		return (free_data(&data), 1);
-	if (!start_win2(&data))
+	if (!start_win(&data))
 		return (free_data(&data), mlx_destroy_display(data.mlx),
 			free(data.mlx), 1);
 	calc_ray(&data);
@@ -55,11 +55,8 @@ bool	parse(t_data *data, char *path)
 		{
 			write(2, "Error\nParsing error\n", 21);
 			free(line);
-			while (ret != 0)
-			{
-				ret = get_next_line(fd, &line);
+			while (get_next_line(fd, &line) != 0)
 				free(line);
-			}
 			return (0);
 		}
 		free(line);

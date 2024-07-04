@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 21:37:05 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:58:23 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,17 +125,24 @@ typedef struct s_tex
 	int			endian;
 }				t_tex;
 
+// ray.c
+void			init_ray_vars(t_data *data, t_ray *vars);
+void			calc_step_side(t_ray *vars, t_data *data);
+void			calculate_hit(t_ray *vars, t_data *data);
+void			calc_perpdist(t_ray *vars);
+void			calculate_wall_properties(t_data *data, t_ray *vars);
+
+// check_utils.c
+bool			texture_check(t_map map);
+bool			check_path(char *path);
+int				row_length(int *row);
+
 // check.c
 bool			map_check(t_map map);
 bool			null_check(t_map map);
 bool			color_check(t_map map);
 bool			valid_map_check(t_map map);
 bool			is_closed(t_map map, int x, int y);
-
-// check_utils.c
-bool			texture_check(t_map map);
-bool			check_path(char *path);
-int 			row_length(int *row);
 
 // init.c
 void			init_data(t_data *data);
@@ -145,9 +152,26 @@ void			set_plane(t_player *player, char c);
 void			init_colors(t_map *map);
 int				free_data(t_data *data);
 
+// keyhook.c
+void			move_ws(int keycode, t_data *data, float move_speed);
+void			move_ad(int keycode, t_data *data, float move_speed);
+void			rota(int keycode, t_data *d, float o_dir_x, float o_pl_x);
+int				x_the_win(t_data *data);
+
 // main.c
 int				main(int argc, char **argv);
 bool			parse(t_data *data, char *file);
+
+// parse_utils.c
+bool			set_player(t_map *map, int x, char c);
+void			set_dir(t_player *player, char c);
+void			set_plane(t_player *player, char c);
+bool			arg_check(int argc, char **argv);
+int				**map_add_line(t_map *map, int *new_line);
+
+// parse_utils2.c
+void			skip_spaces(char *line, int *i);
+int				is_player(char c);
 
 // parsing.c
 bool			manage_line(t_map *map, char *line);
@@ -156,37 +180,18 @@ bool			parse_color(t_color *color, char *line);
 bool			parse_map_data(t_map *map, char *line);
 void			update_map_size(t_map *map, int x);
 
-// parse_utils.c
-bool			set_player(t_map *map, int x, char c);
-bool			arg_check(int argc, char **argv);
-int				**map_add_line(t_map *map, int *new_line);
+//put_wall.c
+void			put_wall(t_data *data, t_ray *vars);
+void			draw_texture(t_data *data, t_ray *vars, int colx);
+int				colortoint(t_color color);
 
-// parse_utils2.c
-void			skip_spaces(char *line, int *i);
-int				is_player(char c);
+// startwin.c
+int				*save_texture(t_data *data, char *path);
+int				start_win(t_data *data);
 
 // window.c
 int				key_hook(int keycode, t_data *data);
+int				what_texture(int side, double ray_dir_x, double ray_dir_y);
 void			calc_ray(t_data *data);
-
-// keyhook.c
-void			move_ws(int keycode, t_data *data, float move_speed);
-void			move_ad(int keycode, t_data *data, float move_speed);
-void			rota(int keycode, t_data *d, float o_dir_x, float o_pl_x);
-int				x_the_win(t_data *data);
-
-// startwin.c
-int				start_win2(t_data *data);
-int				colortoint(t_color color);
-
-// calc_ray_utils.c
-void			init_ray_vars(t_data *data, t_ray *vars);
-void			calc_step_side(t_ray *vars, t_data *data);
-void			calculate_hit(t_ray *vars, t_data *data);
-void			calc_perpdist(t_ray *vars);
-void			calculate_wall_properties(t_data *data, t_ray *vars);
-
-//put_wall_utils.c
-void			draw_texture(t_data *data, t_ray *vars, int colx);
 
 #endif

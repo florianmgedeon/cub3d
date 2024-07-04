@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:38:29 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/04 21:13:32 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:54:49 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,6 @@ int	key_hook(int keycode, t_data *data)
 		x_the_win(data);
 	calc_ray(data);
 	return (0);
-}
-
-// draws the wall
-void	put_wall(t_data *data, t_ray *vars)
-{
-	int	colx;
-	int	y;
-
-	colx = vars->i * (SCREEN_WIDTH / NBR_RAYS);
-	y = 0;
-	while (colx < (vars->i + 1) * (SCREEN_WIDTH / NBR_RAYS))
-	{
-		y = 0;
-		while (y < vars->drawstart)
-		{
-			mlx_pixel_put(data->mlx, data->win2, colx, y,
-				colortoint(data->map.ceiling));
-			y++;
-		}
-		draw_texture(data, vars, colx);
-		y = 0;
-		while (y + vars->drawend < SCREEN_HEIGHT)
-		{
-			mlx_pixel_put(data->mlx, data->win2, colx, y + vars->drawend,
-				colortoint(data->map.floor));
-			y++;
-		}
-		colx++;
-	}
 }
 
 int	what_texture(int side, double ray_dir_x, double ray_dir_y)

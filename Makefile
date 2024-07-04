@@ -6,7 +6,7 @@
 #    By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/18 14:59:11 by jkoupy            #+#    #+#              #
-#    Updated: 2024/07/03 20:34:36 by jkoupy           ###   ########.fr        #
+#    Updated: 2024/07/04 21:55:43 by jkoupy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ RM = rm -rf
 LIBFT =	library/libft/libft.a
 GETNEXTLINE = 	library/get_next_line/getnextline.a
 
-SRCS =	main.c parse.c parse_utils.c parse_utils2.c init.c check.c window.c keyhook.c startwin.c calc_ray_utils.c put_wall_utils.c check_utils.c
+SRCS =	main.c parse.c parse_utils.c parse_utils2.c init.c check.c window.c keyhook.c startwin.c ray.c put_wall.c check_utils.c
 OBJ_DIR = object/
 OBJS =  $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 DEPS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.d))
