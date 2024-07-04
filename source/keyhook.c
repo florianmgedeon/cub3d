@@ -74,7 +74,7 @@ void	rota(int keycode, t_data *d, float o_dir_x, float o_pl_x)
 		* cos(angle);
 }
 
-// cleans up if window is closed with X/esc (NEED MORE IMG DESTROY HERE)
+// cleans up if window is closed with X/esc
 int	x_the_win(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->win2);

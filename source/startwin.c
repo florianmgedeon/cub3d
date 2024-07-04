@@ -21,12 +21,16 @@ int	*save_texture(t_data *data, char *path)
 	tex_info.tex = TEXTURE_SIZE;
 	tex_info.tex_ptr = mlx_xpm_file_to_image(data->mlx, path,
 			&tex_info.tex, &tex_info.tex);
+	if (tex_info.tex_ptr == NULL)
+		return (0);
 	temp = (int *)mlx_get_data_addr(tex_info.tex_ptr,
 			&tex_info.bits_per_pixel,
 			&tex_info.line_length, &tex_info.endian);
+	if (temp == NULL)
+		return (mlx_destroy_image(data->mlx, tex_info.tex_ptr), NULL);
 	tex_info.texture = malloc(sizeof(int) * tex_info.tex * tex_info.tex);
 	if (!tex_info.texture)
-		return (0);
+		return (mlx_destroy_image(data->mlx, tex_info.tex_ptr), NULL);
 	i = 0;
 	while (i < tex_info.tex * tex_info.tex)
 	{
@@ -47,7 +51,7 @@ int	start_win2(t_data *data)
 		return (0);
 	data->texture = malloc(sizeof(int *) * 4);
 	if (!data->texture)
-		return (0);
+		return (mlx_destroy_window(data->mlx, data->win2), 0);
 	data->texture[NORTH] = save_texture(data, data->map.no_path);
 	data->texture[SOUTH] = save_texture(data, data->map.so_path);
 	data->texture[WEST] = save_texture(data, data->map.we_path);

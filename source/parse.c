@@ -117,6 +117,8 @@ bool	parse_map_data(t_map *map, char *line)
 	new_line[i] = -2;
 	update_map_size(map, i);
 	map->data = map_add_line(map, new_line);
+	if (!map->data)
+		return (free(new_line), 0);
 	return (1);
 }
 
