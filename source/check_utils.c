@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 20:32:22 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/03 20:33:56 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:58:44 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ bool	check_path(char *path)
 		write(2, "Error\nTexture path is incorrect\n", 32);
 		return (false);
 	}
-	close(fd);
+	if (close(fd) == -1)
+	{
+		perror("Error\nClose");
+		return (false);
+	}
 	return (true);
 }

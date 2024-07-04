@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:30:08 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/03 20:29:24 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:56:11 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	free_data(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->map.size_y)
+	while (i < data->map.size_y && data->map.data && data->map.data[i])
 		free(data->map.data[i++]);
 	free(data->map.data);
 	free(data->map.no_path);

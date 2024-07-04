@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:55:26 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/06/27 14:31:08 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:10:06 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ bool	parse_texture(char **path, char *line)
 	skip_spaces(line, &i);
 	new_path = malloc(ft_strlen(line + i) * sizeof(char));
 	if (!new_path)
-		return (0);
+		return (false);
 	j = 0;
 	while (line[i] && line[i] != '\n' && line[i] != ' ' && line[i] != '\0')
 		new_path[j++] = line[i++];
 	new_path[j] = '\0';
 	*path = new_path;
-	return (1);
+	return (true);
 }
 
 //parse the color format 
