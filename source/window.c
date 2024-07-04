@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:38:29 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 20:13:06 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:13:32 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	what_texture(int side, double ray_dir_x, double ray_dir_y)
 void	calc_ray(t_data *data)
 {
 	t_ray	vars;
-	float	x_of_tex;
 
 	vars.i = 0;
 	vars.w = NBR_RAYS;
@@ -97,13 +96,6 @@ void	calc_ray(t_data *data)
 		calc_perpdist(&vars);
 		vars.tex = what_texture(vars.side, vars.ray_dir_x, vars.ray_dir_y);
 		calculate_wall_properties(data, &vars);
-		x_of_tex = 0;
-		if (vars.side == 0)
-			x_of_tex = (data->map.player.y + vars.perpwalldist
-					* vars.ray_dir_y);
-		else
-			x_of_tex = (data->map.player.x + vars.perpwalldist
-					* vars.ray_dir_x);
 		put_wall(data, &vars);
 		vars.i++;
 	}

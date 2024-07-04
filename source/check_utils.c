@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 20:32:22 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 15:58:44 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:34:12 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,14 @@ bool	check_path(char *path)
 		return (false);
 	}
 	return (true);
+}
+
+int	row_length(int *row)
+{
+	int	i;
+
+	i = 0;
+	while (row[i] != -2)
+		i++;
+	return (i);
 }

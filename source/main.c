@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:36:10 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 17:03:03 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:26:17 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ bool	parse(t_data *data, char *path)
 	{
 		if (ret == -1 || !manage_line(&data->map, line))
 		{
-			free(line);
 			write(2, "Error\nParsing error\n", 21);
-			close(fd);
+			free(line);
+			while (ret != 0)
+			{
+				ret = get_next_line(fd, &line);
+				free(line);
+			}
 			return (0);
 		}
 		free(line);

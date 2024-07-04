@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 16:34:51 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:37:05 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define D 2
 # define ESC 53
 # define PI 3.14159265359
-# define SCREEN_WIDTH 1500
-# define SCREEN_HEIGHT 800
+# define SCREEN_WIDTH 150
+# define SCREEN_HEIGHT 80
 # define NBR_RAYS SCREEN_WIDTH
 # define NORTH 0
 # define SOUTH 1
@@ -130,10 +130,12 @@ bool			map_check(t_map map);
 bool			null_check(t_map map);
 bool			color_check(t_map map);
 bool			valid_map_check(t_map map);
+bool			is_closed(t_map map, int x, int y);
 
 // check_utils.c
 bool			texture_check(t_map map);
 bool			check_path(char *path);
+int 			row_length(int *row);
 
 // init.c
 void			init_data(t_data *data);

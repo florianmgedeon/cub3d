@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:41:33 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 17:03:25 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/04 21:21:39 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,22 @@ bool	save_line(t_list **llist, int fd)
 	char	*buf;
 
 	if (*llist && line_ends((*llist)->content))
-		return (1);
+		return (true);
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return (false);
 	readlen = read(fd, buf, BUFFER_SIZE);
 	if (readlen == 0)
-		return (free(buf), 1);
+		return (free(buf), true);
 	if (readlen == -1)
-		return (free(buf), free_list(llist, NULL), 1);
+		return (free(buf), free_list(llist, NULL), true);
 	buf[readlen] = '\0';
 	if (!ft_lstadd_new(llist, buf))
-		return (free(buf), free_list(llist, NULL), 1);
+		return (free(buf), free_list(llist, NULL), true);
 	if (line_ends(buf) || readlen < BUFFER_SIZE)
-		return (1);
+		return (true);
 	if (!save_line(llist, fd))
-	{
-		free_list(llist, NULL);
-		return (false);
-	}
+		return (free_list(llist, NULL), false);
 	return (true);
 }
 
