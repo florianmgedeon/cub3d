@@ -26,7 +26,6 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -lmlx -lXext -lX11 -lm
-RFLAGS = -lreadline
 DEPFLAGS = -MT $@ -MMD -MP -MF $(OBJ_DIR)/$*.d
 RM = rm -rf
 
@@ -46,7 +45,7 @@ object/%.o: source/%.c
 	@$(CC) -c $(CFLAGS) $(DEPFLAGS) $< -o $@
 
 $(NAME): $(LIBFT) $(GETNEXTLINE) $(OBJS) 
-	@$(CC) $(OBJS) $(MLXFLAGS) $(CFLAGS) $(LIBFT) $(GETNEXTLINE) -o $(NAME) $(RFLAGS)
+	@$(CC) $(OBJS) $(MLXFLAGS) $(CFLAGS) $(LIBFT) $(GETNEXTLINE) -o $(NAME)
 	@printf "\r$(GREEN)🚀 ./$(NAME)          created                                                                     \n$(END)"
 
 $(LIBFT):

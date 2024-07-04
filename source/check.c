@@ -92,7 +92,7 @@ bool	valid_map_check(t_map map)
 		x = 0;
 		while (x < map.size_x && map.data[y][x] != -2)
 		{
-			if (map.data[y][x] == 0 || map.data[y][x] == 2)
+			if (map.data[y][x] == 0)
 			{
 				if (y == 0 || y == map.size_y - 1
 					|| x == 0 || x == map.size_x - 1
