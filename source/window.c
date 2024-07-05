@@ -63,8 +63,7 @@ void	calc_ray(t_data *data)
 	{
 		init_ray_vars(data, &vars);
 		calc_step_side(&vars, data);
-		calculate_hit(&vars, data);
-		calc_perpdist(&vars);
+		calc_wall_dist(&vars, data);
 		vars.tex = what_texture(vars.wall_side, vars.ray_dir_x, vars.ray_dir_y);
 		calculate_wall_properties(data, &vars);
 		put_wall(data, &vars);

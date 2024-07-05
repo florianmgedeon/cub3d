@@ -14,7 +14,6 @@
 
 void	init_ray_vars(t_data *data, t_ray *vars)
 {
-	vars->wall_hit = 0;
 	vars->map_x = (int)data->map.player.x;
 	vars->map_y = (int)data->map.player.y;
 	vars->camera_x = 2 * vars->ray_i / (double)vars->s_width - 1;
@@ -30,54 +29,48 @@ void	calc_step_side(t_ray *vars, t_data *data)
 {
 	if (vars->ray_dir_x < 0)
 	{
-		vars->step_x = -1;
 		vars->side_dist_x = (data->map.player.x - vars->map_x)
 			* vars->delta_dist_x;
+		vars->step_x = -1;
 	}
 	else
 	{
-		vars->step_x = 1;
 		vars->side_dist_x = (vars->map_x + 1.0 - data->map.player.x)
 			* vars->delta_dist_x;
+		vars->step_x = 1;
 	}
 	if (vars->ray_dir_y < 0)
 	{
-		vars->step_y = -1;
 		vars->side_dist_y = (data->map.player.y - vars->map_y)
 			* vars->delta_dist_y;
+		vars->step_y = -1;
 	}
 	else
 	{
-		vars->step_y = 1;
 		vars->side_dist_y = (vars->map_y + 1.0 - data->map.player.y)
 			* vars->delta_dist_y;
+		vars->step_y = 1;
 	}
 }
 
-void	calculate_hit(t_ray *vars, t_data *data)
+void	calc_wall_dist(t_ray *vars, t_data *data)
 {
-	while (vars->wall_hit == 0)
+	while (data->map.data[vars->map_y][vars->map_x] != 1)
 	{
 		if (vars->side_dist_x < vars->side_dist_y)
 		{
+			vars->wall_side = HORIZONTAL;
 			vars->side_dist_x += vars->delta_dist_x;
 			vars->map_x += vars->step_x;
-			vars->wall_side = 0;
 		}
 		else
 		{
+			vars->wall_side = VERTICAL;
 			vars->side_dist_y += vars->delta_dist_y;
 			vars->map_y += vars->step_y;
-			vars->wall_side = 1;
 		}
-		if (data->map.data[vars->map_y][vars->map_x] > 0)
-			vars->wall_hit = 1;
 	}
-}
-
-void	calc_perpdist(t_ray *vars)
-{
-	if (vars->wall_side == 0)
+	if (vars->wall_side == HORIZONTAL)
 		vars->wall_dist = (vars->side_dist_x - vars->delta_dist_x);
 	else
 		vars->wall_dist = (vars->side_dist_y - vars->delta_dist_y);
@@ -89,9 +82,9 @@ void	calculate_wall_properties(t_data *d, t_ray *vars)
 	if (vars->wall_dist < 0.01)
 		vars->wall_dist = 0.01;
 	vars->wall_height = (int)(vars->s_height / vars->wall_dist);
-	vars->wall_top = -vars->wall_height / 2 + vars->s_height / 2;
-	vars->wall_bottom = vars->wall_height / 2 + vars->s_height / 2;
-	if (vars->wall_side == 0)
+	vars->wall_top = (vars->s_height / 2) - (vars->wall_height / 2);
+	vars->wall_bottom = (vars->s_height / 2) + (vars->wall_height / 2);
+	if (vars->wall_side == HORIZONTAL)
 		vars->x_of_tex = (d->map.player.y + vars->wall_dist
 				* vars->ray_dir_y);
 	else

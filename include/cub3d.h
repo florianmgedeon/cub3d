@@ -30,6 +30,8 @@
 # define WEST 3
 # define TEXTURE_SIZE 64
 # define ROTATION_SPEED 0.10471975512
+# define HORIZONTAL 0
+# define VERTICAL 1
 
 # include "../library/get_next_line/include/get_next_line.h"
 # include "../library/libft/include/libft.h"
@@ -99,7 +101,6 @@ typedef struct s_ray
 	double		delta_dist_y;
 	int			step_x;
 	int			step_y;
-	int			wall_hit;
 	int			wall_side;
 	float		wall_dist;
 	int			tex;
@@ -123,8 +124,7 @@ typedef struct s_tex
 // ray.c
 void			init_ray_vars(t_data *data, t_ray *vars);
 void			calc_step_side(t_ray *vars, t_data *data);
-void			calculate_hit(t_ray *vars, t_data *data);
-void			calc_perpdist(t_ray *vars);
+void			calc_wall_dist(t_ray *vars, t_data *data);
 void			calculate_wall_properties(t_data *data, t_ray *vars);
 
 // check_utils.c
