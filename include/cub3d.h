@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/04 21:58:23 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:11:11 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_ray
 	int			wall_height;
 	int			wall_top;
 	int			wall_bottom;
-	float		x_of_tex;
+	float		wall_x;
 }				t_ray;
 
 typedef struct s_tex

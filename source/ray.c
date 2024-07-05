@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_ray_utils.c                                   :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:31:26 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/03 20:06:07 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:11:11 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void	calculate_wall_properties(t_data *d, t_ray *vars)
 	vars->wall_top = (vars->s_height / 2) - (vars->wall_height / 2);
 	vars->wall_bottom = (vars->s_height / 2) + (vars->wall_height / 2);
 	if (vars->wall_side == HORIZONTAL)
-		vars->x_of_tex = (d->map.player.y + vars->wall_dist
+		vars->wall_x = (d->map.player.y + vars->wall_dist
 				* vars->ray_dir_y);
 	else
-		vars->x_of_tex = (d->map.player.x + vars->wall_dist
+		vars->wall_x = (d->map.player.x + vars->wall_dist
 				* vars->ray_dir_x);
 }

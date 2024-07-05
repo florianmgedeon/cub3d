@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:40:51 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/04 21:55:54 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:11:11 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	put_wall(t_data *data, t_ray *vars)
 // calculates the x and y of the texture to draw in the wall
 void	draw_texture(t_data *data, t_ray *vars, int colx)
 {
-	int	x;
 	int	y;
+	int	tex_x;
 	int	tex_y;
 	int	color;
 
@@ -59,11 +59,11 @@ void	draw_texture(t_data *data, t_ray *vars, int colx)
 		}
 		if (vars->wall_top + y >= SCREEN_HEIGHT)
 			break ;
-		x = (int)((vars->x_of_tex - (int)vars->x_of_tex) * TEXTURE_SIZE);
+		tex_x = (int)((vars->wall_x - (int)vars->wall_x) * TEXTURE_SIZE);
 		if (vars->tex == SOUTH || vars->tex == WEST)
-			x = TEXTURE_SIZE - x - 1;
+			tex_x = TEXTURE_SIZE - tex_x - 1;
 		tex_y = (y * TEXTURE_SIZE) / (vars->wall_bottom - vars->wall_top);
-		color = data->texture[vars->tex][x + tex_y * TEXTURE_SIZE];
+		color = data->texture[vars->tex][tex_x + tex_y * TEXTURE_SIZE];
 		mlx_pixel_put(data->mlx, data->win, colx, vars->wall_top + y, color);
 		y++;
 	}
