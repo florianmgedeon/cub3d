@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:01:06 by jkoupy            #+#    #+#             */
-/*   Updated: 2024/07/05 10:11:11 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:14:35 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define WEST 3
 # define TEXTURE_SIZE 64
 # define ROTATION_SPEED 0.10471975512
-# define HORIZONTAL 0
-# define VERTICAL 1
+# define VERTICAL 0
+# define HORIZONTAL 1
 
 # include "../library/get_next_line/include/get_next_line.h"
 # include "../library/libft/include/libft.h"

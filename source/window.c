@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:38:29 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/04 21:54:49 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:14:41 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	key_hook(int keycode, t_data *data)
 
 int	what_texture(int side, double ray_dir_x, double ray_dir_y)
 {
-	if (side == 0)
+	if (side == VERTICAL)
 	{
 		if (ray_dir_x > 0)
 			return (EAST);

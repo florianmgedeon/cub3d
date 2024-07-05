@@ -6,7 +6,7 @@
 /*   By: jkoupy <jkoupy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:31:26 by fgedeon           #+#    #+#             */
-/*   Updated: 2024/07/05 10:11:11 by jkoupy           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:15:08 by jkoupy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ void	calc_wall_dist(t_ray *vars, t_data *data)
 	{
 		if (vars->side_dist_x < vars->side_dist_y)
 		{
-			vars->wall_side = HORIZONTAL;
+			vars->wall_side = VERTICAL;
 			vars->side_dist_x += vars->delta_dist_x;
 			vars->map_x += vars->step_x;
 		}
 		else
 		{
-			vars->wall_side = VERTICAL;
+			vars->wall_side = HORIZONTAL;
 			vars->side_dist_y += vars->delta_dist_y;
 			vars->map_y += vars->step_y;
 		}
 	}
-	if (vars->wall_side == HORIZONTAL)
+	if (vars->wall_side == VERTICAL)
 		vars->wall_dist = (vars->side_dist_x - vars->delta_dist_x);
 	else
 		vars->wall_dist = (vars->side_dist_y - vars->delta_dist_y);
@@ -84,7 +84,7 @@ void	calculate_wall_properties(t_data *d, t_ray *vars)
 	vars->wall_height = (int)(vars->s_height / vars->wall_dist);
 	vars->wall_top = (vars->s_height / 2) - (vars->wall_height / 2);
 	vars->wall_bottom = (vars->s_height / 2) + (vars->wall_height / 2);
-	if (vars->wall_side == HORIZONTAL)
+	if (vars->wall_side == VERTICAL)
 		vars->wall_x = (d->map.player.y + vars->wall_dist
 				* vars->ray_dir_y);
 	else
