@@ -77,7 +77,7 @@ void	rota(int keycode, t_data *d, float o_dir_x, float o_pl_x)
 // cleans up if window is closed with X/esc
 int	x_the_win(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->win2);
+	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	free_data(data);

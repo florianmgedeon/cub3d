@@ -45,13 +45,13 @@ int	*save_texture(t_data *data, char *path)
 //save texture file to image then image to address function
 int	start_win(t_data *data)
 {
-	data->win2 = mlx_new_window(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
+	data->win = mlx_new_window(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cub3D");
-	if (!data->win2)
+	if (!data->win)
 		return (0);
 	data->texture = malloc(sizeof(int *) * 4);
 	if (!data->texture)
-		return (mlx_destroy_window(data->mlx, data->win2), 0);
+		return (mlx_destroy_window(data->mlx, data->win), 0);
 	data->texture[NORTH] = save_texture(data, data->map.no_path);
 	data->texture[SOUTH] = save_texture(data, data->map.so_path);
 	data->texture[WEST] = save_texture(data, data->map.we_path);

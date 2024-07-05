@@ -88,9 +88,9 @@ void	calculate_wall_properties(t_data *d, t_ray *vars)
 	vars->s_height = SCREEN_HEIGHT;
 	if (vars->wall_dist < 0.01)
 		vars->wall_dist = 0.01;
-	vars->lineheight = (int)(vars->s_height / vars->wall_dist);
-	vars->drawstart = -vars->lineheight / 2 + vars->s_height / 2;
-	vars->drawend = vars->lineheight / 2 + vars->s_height / 2;
+	vars->wall_height = (int)(vars->s_height / vars->wall_dist);
+	vars->wall_top = -vars->wall_height / 2 + vars->s_height / 2;
+	vars->wall_bottom = vars->wall_height / 2 + vars->s_height / 2;
 	if (vars->wall_side == 0)
 		vars->x_of_tex = (d->map.player.y + vars->wall_dist
 				* vars->ray_dir_y);

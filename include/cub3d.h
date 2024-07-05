@@ -78,12 +78,8 @@ typedef struct s_data
 {
 	void		*img;
 	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
 	void		*mlx;
 	void		*win;
-	void		*win2;
 	t_map		map;
 	int			**texture;
 }				t_data;
@@ -108,9 +104,9 @@ typedef struct s_ray
 	float		wall_dist;
 	int			tex;
 	int			s_height;
-	int			lineheight;
-	int			drawstart;
-	int			drawend;
+	int			wall_height;
+	int			wall_top;
+	int			wall_bottom;
 	float		x_of_tex;
 }				t_ray;
 

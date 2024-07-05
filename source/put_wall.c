@@ -23,17 +23,17 @@ void	put_wall(t_data *data, t_ray *vars)
 	while (colx < (vars->ray_i + 1) * (SCREEN_WIDTH / NBR_RAYS))
 	{
 		y = 0;
-		while (y < vars->drawstart)
+		while (y < vars->wall_top)
 		{
-			mlx_pixel_put(data->mlx, data->win2, colx, y,
+			mlx_pixel_put(data->mlx, data->win, colx, y,
 				colortoint(data->map.ceiling));
 			y++;
 		}
 		draw_texture(data, vars, colx);
 		y = 0;
-		while (y + vars->drawend < SCREEN_HEIGHT)
+		while (y + vars->wall_bottom < SCREEN_HEIGHT)
 		{
-			mlx_pixel_put(data->mlx, data->win2, colx, y + vars->drawend,
+			mlx_pixel_put(data->mlx, data->win, colx, y + vars->wall_bottom,
 				colortoint(data->map.floor));
 			y++;
 		}
@@ -50,21 +50,21 @@ void	draw_texture(t_data *data, t_ray *vars, int colx)
 	int	color;
 
 	y = 0;
-	while (vars->drawstart + y < vars->drawend)
+	while (vars->wall_top + y < vars->wall_bottom)
 	{
-		if (vars->drawstart + y < 0)
+		if (vars->wall_top + y < 0)
 		{
 			y++;
 			continue ;
 		}
-		if (vars->drawstart + y >= SCREEN_HEIGHT)
+		if (vars->wall_top + y >= SCREEN_HEIGHT)
 			break ;
 		x = (int)((vars->x_of_tex - (int)vars->x_of_tex) * TEXTURE_SIZE);
 		if (vars->tex == SOUTH || vars->tex == WEST)
 			x = TEXTURE_SIZE - x - 1;
-		tex_y = (y * TEXTURE_SIZE) / (vars->drawend - vars->drawstart);
+		tex_y = (y * TEXTURE_SIZE) / (vars->wall_bottom - vars->wall_top);
 		color = data->texture[vars->tex][x + tex_y * TEXTURE_SIZE];
-		mlx_pixel_put(data->mlx, data->win2, colx, vars->drawstart + y, color);
+		mlx_pixel_put(data->mlx, data->win, colx, vars->wall_top + y, color);
 		y++;
 	}
 }

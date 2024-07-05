@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 		return (free_data(&data), mlx_destroy_display(data.mlx),
 			free(data.mlx), 1);
 	calc_ray(&data);
-	mlx_hook(data.win2, 17, 0, x_the_win, &data);
-	mlx_hook(data.win2, 2, 1L << 0, key_hook, &data);
+	mlx_hook(data.win, 17, 0, x_the_win, &data);
+	mlx_hook(data.win, 2, 1L << 0, key_hook, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }
