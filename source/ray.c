@@ -21,34 +21,34 @@ void	init_ray_vars(t_data *data, t_ray *vars)
 		* vars->camera_x;
 	vars->ray_dir_y = data->map.player.dir_y + data->map.player.plane_y
 		* vars->camera_x;
-	vars->delta_dist_x = fabs(1 / vars->ray_dir_x);
-	vars->delta_dist_y = fabs(1 / vars->ray_dir_y);
+	vars->step_dist_x = fabs(1 / vars->ray_dir_x);
+	vars->step_dist_y = fabs(1 / vars->ray_dir_y);
 }
 
 void	calc_step_side(t_ray *vars, t_data *data)
 {
 	if (vars->ray_dir_x < 0)
 	{
-		vars->side_dist_x = (data->map.player.x - vars->map_x)
-			* vars->delta_dist_x;
+		vars->first_dist_x = (data->map.player.x - vars->map_x)
+			* vars->step_dist_x;
 		vars->step_x = -1;
 	}
 	else
 	{
-		vars->side_dist_x = (vars->map_x + 1.0 - data->map.player.x)
-			* vars->delta_dist_x;
+		vars->first_dist_x = (vars->map_x + 1.0 - data->map.player.x)
+			* vars->step_dist_x;
 		vars->step_x = 1;
 	}
 	if (vars->ray_dir_y < 0)
 	{
-		vars->side_dist_y = (data->map.player.y - vars->map_y)
-			* vars->delta_dist_y;
+		vars->first_dist_y = (data->map.player.y - vars->map_y)
+			* vars->step_dist_y;
 		vars->step_y = -1;
 	}
 	else
 	{
-		vars->side_dist_y = (vars->map_y + 1.0 - data->map.player.y)
-			* vars->delta_dist_y;
+		vars->first_dist_y = (vars->map_y + 1.0 - data->map.player.y)
+			* vars->step_dist_y;
 		vars->step_y = 1;
 	}
 }
@@ -57,23 +57,23 @@ void	calc_wall_dist(t_ray *vars, t_data *data)
 {
 	while (data->map.data[vars->map_y][vars->map_x] != 1)
 	{
-		if (vars->side_dist_x < vars->side_dist_y)
+		if (vars->first_dist_x < vars->first_dist_y)
 		{
 			vars->wall_side = VERTICAL;
-			vars->side_dist_x += vars->delta_dist_x;
+			vars->first_dist_x += vars->step_dist_x;
 			vars->map_x += vars->step_x;
 		}
 		else
 		{
 			vars->wall_side = HORIZONTAL;
-			vars->side_dist_y += vars->delta_dist_y;
+			vars->first_dist_y += vars->step_dist_y;
 			vars->map_y += vars->step_y;
 		}
 	}
 	if (vars->wall_side == VERTICAL)
-		vars->wall_dist = (vars->side_dist_x - vars->delta_dist_x);
+		vars->wall_dist = (vars->first_dist_x - vars->step_dist_x);
 	else
-		vars->wall_dist = (vars->side_dist_y - vars->delta_dist_y);
+		vars->wall_dist = (vars->first_dist_y - vars->step_dist_y);
 }
 
 void	calculate_wall_properties(t_data *d, t_ray *vars)
