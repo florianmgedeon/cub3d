@@ -90,8 +90,8 @@ typedef struct s_data
 
 typedef struct s_ray
 {
-	int			i;
-	int			w;
+	int			ray_i;
+	int			s_width;
 	double		camera_x;
 	double		ray_dir_x;
 	double		ray_dir_y;
@@ -103,15 +103,14 @@ typedef struct s_ray
 	double		delta_dist_y;
 	int			step_x;
 	int			step_y;
-	int			hit;
-	int			side;
-	float		perpwalldist;
+	int			wall_hit;
+	int			wall_side;
+	float		wall_dist;
 	int			tex;
-	int			h;
+	int			s_height;
 	int			lineheight;
 	int			drawstart;
 	int			drawend;
-	int			color_wall;
 	float		x_of_tex;
 }				t_ray;
 

@@ -57,17 +57,17 @@ void	calc_ray(t_data *data)
 {
 	t_ray	vars;
 
-	vars.i = 0;
-	vars.w = NBR_RAYS;
-	while (vars.i <= vars.w)
+	vars.ray_i = 0;
+	vars.s_width = NBR_RAYS;
+	while (vars.ray_i <= vars.s_width)
 	{
 		init_ray_vars(data, &vars);
 		calc_step_side(&vars, data);
 		calculate_hit(&vars, data);
 		calc_perpdist(&vars);
-		vars.tex = what_texture(vars.side, vars.ray_dir_x, vars.ray_dir_y);
+		vars.tex = what_texture(vars.wall_side, vars.ray_dir_x, vars.ray_dir_y);
 		calculate_wall_properties(data, &vars);
 		put_wall(data, &vars);
-		vars.i++;
+		vars.ray_i++;
 	}
 }

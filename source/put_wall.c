@@ -18,9 +18,9 @@ void	put_wall(t_data *data, t_ray *vars)
 	int	colx;
 	int	y;
 
-	colx = vars->i * (SCREEN_WIDTH / NBR_RAYS);
+	colx = vars->ray_i * (SCREEN_WIDTH / NBR_RAYS);
 	y = 0;
-	while (colx < (vars->i + 1) * (SCREEN_WIDTH / NBR_RAYS))
+	while (colx < (vars->ray_i + 1) * (SCREEN_WIDTH / NBR_RAYS))
 	{
 		y = 0;
 		while (y < vars->drawstart)
